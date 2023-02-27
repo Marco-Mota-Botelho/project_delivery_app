@@ -35,7 +35,7 @@ function Login() {
 
       { isInvalidEmail && (
         <span data-testid="">
-          ERROR
+          ERRO
         </span>
       ) }
 
