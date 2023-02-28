@@ -16,4 +16,10 @@ const login = async ({ email, password }) => {
   return { status: HttpStatusCode.OK, result };
 };
 
-module.exports = { login };
+const register = async ({ name, email, password }) => {
+  const codedPassword = md5(password);
+  const result = await User.create({ name, email, password: codedPassword });
+  return { status: HttpStatusCode.CREATED, result };
+};
+
+module.exports = { login, register };

@@ -11,6 +11,6 @@ app.use(ErrorHandler.handler);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 
-app.use('/login', usersRoutes);
+app.use('/', usersRoutes);
 
 module.exports = app;
