@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { requestLogin } from '../services/requests';
 
 const MIN_PASSWORD_LENGTH = 6;
+const MIN_NAME_LENGTH = 12;
 
 function Login() {
   const [state, setState] = useState({ email: '', password: '', userName: '' });
@@ -9,7 +10,7 @@ function Login() {
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
-    return !(checkEmail && state.password.length >= MIN_PASSWORD_LENGTH);
+    return !(checkEmail && state.password.length >= MIN_PASSWORD_LENGTH && state.userName.length >= MIN_NAME_LENGTH);
   };
 
   const onInputChange = ({ target: { name, value } }) => {
