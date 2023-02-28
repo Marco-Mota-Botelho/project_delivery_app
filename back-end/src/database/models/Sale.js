@@ -31,20 +31,24 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     deliveryAddress: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false,
+      field: 'delivery_adress',
     },
     deliveryNumber: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'delivery_number',
     },
     saleDate: {
       type: DataTypes.DATE,
       allowNull: false,
+      field: 'sale_date',
     },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: 'Pendente',
     },
   }, {
     tableName: 'sales',

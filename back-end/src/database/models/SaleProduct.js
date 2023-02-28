@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'sales',
         key: 'id',
       },
+      primaryKey: true,
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     },
@@ -46,6 +47,5 @@ module.exports = (sequelize, DataTypes) => {
         as: 'sales' 
     });
   };
-
   return SaleProduct;
 }

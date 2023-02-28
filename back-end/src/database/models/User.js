@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: 'customer',
     },
   }, {
     tableName: 'users',
@@ -32,9 +33,12 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (models) => {
     User.hasMany(models.Sale, {
       foreignKey: 'userId',
-      as: 'user',
+      as: 'salesUser',
+    });
+    User.hasMany(models.Sale, {
+      foreignKey: 'selleId',
+      as: 'salesSeller',
     });
   };
-
   return User;
 };

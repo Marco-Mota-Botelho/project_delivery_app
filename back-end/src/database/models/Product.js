@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     urlImage: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'url_image'
     },
   }, {
     tableName: 'products',
