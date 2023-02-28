@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { requestLogin } from '../services/requests';
+import ROLE_PATH from '../utils/rolePaths';
 
 const MIN_PASSWORD_LENGTH = 6;
 
 function Login() {
   const [state, setState] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
@@ -20,9 +23,9 @@ function Login() {
     const { email, password } = state;
     try {
       const response = await requestLogin('/login', { email, password });
-      console.log(response);
+      navigate(`/${ROLE_PATH[response.role]}`);
     } catch (error) {
-      setErrorMessage(error.request.statusText);
+      setErrorMessage('Email inválido');
       console.error(error);
     }
   };
