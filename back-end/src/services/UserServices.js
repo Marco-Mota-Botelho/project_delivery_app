@@ -1,5 +1,5 @@
-const { User } = require('../database/models');
 const md5 = require('md5');
+const { User } = require('../database/models');
 const HttpStatusCode = require('../utils/HttpStatusCode');
 
 const login = async ({ email, password }) => {
@@ -9,7 +9,9 @@ const login = async ({ email, password }) => {
 
   const codedPassword = md5(password);
 
-  if (codedPassword !== result.password) return { status: HttpStatusCode.UNAUTHORIZED, message: 'Invalid password' };
+  if (codedPassword !== result.password) {
+    return { status: HttpStatusCode.UNAUTHORIZED, message: 'Invalid password' };
+  }
 
   return { status: HttpStatusCode.OK, result };
 };
