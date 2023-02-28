@@ -62,4 +62,4 @@ const HttpStatusCode = {
   NETWORK_AUTHENTICATION_REQUIRED: 511,
 };
 
-module.exports =  HttpStatusCode;
+module.exports = HttpStatusCode;
