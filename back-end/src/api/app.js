@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const ErrorHandler = require('../middlewares/ErrorHandler');
-const usersRoutes = require('../routes/users.routes');
+const { usersRoutes, registerRoutes } = require('../routes/users.routes');
 
 const app = express();
 
@@ -11,6 +11,7 @@ app.use(ErrorHandler.handler);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 
-app.use('/', usersRoutes);
+app.use('/login', usersRoutes);
+app.use('/register', registerRoutes);
 
 module.exports = app;

@@ -29,7 +29,7 @@ function Login() {
       console.log(response);
       navigate(`/${ROLE_PATH.customer}`);
     } catch (error) {
-      setErrorMessage('Não foi possível castrar');
+      setErrorMessage(error.request.statusText);
       console.error(error);
     }
   };

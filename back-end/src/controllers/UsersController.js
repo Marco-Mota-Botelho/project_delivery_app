@@ -15,6 +15,4 @@ const register = async (req, res) => {
   return res.status(status).json(result);
 };
 
-
-
 module.exports = { login, register };
