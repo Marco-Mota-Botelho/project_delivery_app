@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { requestLogin } from '../services/requests';
 
 const MIN_PASSWORD_LENGTH = 6;
 
 function Login() {
-  const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [state, setState] = useState({ email: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
@@ -13,8 +14,22 @@ function Login() {
 
   const onInputChange = ({ target: { name, value } }) => {
     setState({ ...state, [name]: value });
-    setIsInvalidEmail(validateLogin());
   };
+
+  const handleClick = async () => {
+    const { email, password } = state;
+    try {
+      const response = await requestLogin('/login', { email, password });
+      console.log(response);
+    } catch (error) {
+      setErrorMessage(error.request.statusText);
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [state]);
 
   return (
     <div>
@@ -38,6 +53,7 @@ function Login() {
         type="button"
         data-testid="common_login__button-login"
         disabled={ validateLogin() }
+        onClick={ handleClick }
       >
         LOGIN
       </button>
@@ -48,11 +64,9 @@ function Login() {
         AINDA NÃO TENHO CONTA
       </button>
 
-      { isInvalidEmail && (
-        <span data-testid="">
-          ERRO
-        </span>
-      ) }
+      <span data-testid="common_login__element-invalid-email">
+        { errorMessage }
+      </span>
 
     </div>
   );
