@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { requestLogin } from '../services/requests';
 
 const MIN_PASSWORD_LENGTH = 6;
 
 function Login() {
-  const [state, setState] = useState({ email: '', password: '' });
+  const [state, setState] = useState({ email: '', password: '', userName: '' });
   const [errorMessage, setErrorMessage] = useState('');
 
   const validateLogin = () => {
@@ -18,9 +17,9 @@ function Login() {
   };
 
   const handleClick = async () => {
-    const { email, password } = state;
+    const { userName, email, password } = state;
     try {
-      const response = await requestLogin('/login', { email, password });
+      const response = await requestLogin('/register', { userName, email, password });
       console.log(response);
     } catch (error) {
       setErrorMessage(error.request.statusText);
@@ -35,8 +34,16 @@ function Login() {
   return (
     <div>
       <input
+        type="userName"
+        data-testid="common_register__input-name"
+        name="userName"
+        placeholder="Digite seu nome"
+        onChange={ onInputChange }
+        value={ state.userName }
+      />
+      <input
         type="email"
-        data-testid="common_login__input-email"
+        data-testid="common_register__input-email"
         name="email"
         placeholder="Digite seu email"
         onChange={ onInputChange }
@@ -44,7 +51,7 @@ function Login() {
       />
       <input
         type="text"
-        data-testid="common_login__input-password"
+        data-testid="common_register__input-password"
         name="password"
         placeholder="Digite sua senha"
         onChange={ onInputChange }
@@ -52,22 +59,13 @@ function Login() {
       />
       <button
         type="button"
-        data-testid="common_login__button-login"
+        data-testid="common_register__button-register"
         disabled={ validateLogin() }
         onClick={ handleClick }
       >
-        LOGIN
+        Cadastrar
       </button>
-      <Link to="/register">
-        <button
-          type="button"
-          data-testid="common_login__button-register"
-        >
-          AINDA NÃO TENHO CONTA
-        </button>
-      </Link>
-
-      <span data-testid="common_login__element-invalid-email">
+      <span data-testid="common_register__element-invalid_register">
         { errorMessage }
       </span>
 
