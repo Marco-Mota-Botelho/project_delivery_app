@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { requestLogin } from '../services/requests';
-import ROLE_PATH from '../utils/rolePaths';
 
 const MIN_PASSWORD_LENGTH = 6;
 
 function Login() {
-  const [state, setState] = useState({ email: '', password: '' });
+  const [state, setState] = useState({ email: '', password: '', userName: '' });
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
@@ -21,12 +17,12 @@ function Login() {
   };
 
   const handleClick = async () => {
-    const { email, password } = state;
+    const { userName, email, password } = state;
     try {
-      const response = await requestLogin('/login', { email, password });
-      navigate(`/${ROLE_PATH[response.role]}`);
+      const response = await requestLogin('/register', { userName, email, password });
+      console.log(response);
     } catch (error) {
-      setErrorMessage('Email inválido');
+      setErrorMessage(error.request.statusText);
       console.error(error);
     }
   };
@@ -38,8 +34,16 @@ function Login() {
   return (
     <div>
       <input
+        type="userName"
+        data-testid="common_register__input-name"
+        name="userName"
+        placeholder="Digite seu nome"
+        onChange={ onInputChange }
+        value={ state.userName }
+      />
+      <input
         type="email"
-        data-testid="common_login__input-email"
+        data-testid="common_register__input-email"
         name="email"
         placeholder="Digite seu email"
         onChange={ onInputChange }
@@ -47,7 +51,7 @@ function Login() {
       />
       <input
         type="text"
-        data-testid="common_login__input-password"
+        data-testid="common_register__input-password"
         name="password"
         placeholder="Digite sua senha"
         onChange={ onInputChange }
@@ -55,22 +59,13 @@ function Login() {
       />
       <button
         type="button"
-        data-testid="common_login__button-login"
+        data-testid="common_register__button-register"
         disabled={ validateLogin() }
         onClick={ handleClick }
       >
-        LOGIN
+        Cadastrar
       </button>
-      <Link to="/register">
-        <button
-          type="button"
-          data-testid="common_login__button-register"
-        >
-          AINDA NÃO TENHO CONTA
-        </button>
-      </Link>
-
-      <span data-testid="common_login__element-invalid-email">
+      <span data-testid="common_register__element-invalid_register">
         { errorMessage }
       </span>
 
