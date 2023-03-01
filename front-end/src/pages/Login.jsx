@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { requestLogin } from '../services/requests';
 import ROLE_PATH from '../utils/rolePaths';
+import { setUser } from '../services/userStorage';
 
 const MIN_PASSWORD_LENGTH = 6;
 
@@ -23,6 +24,12 @@ function Login() {
     const { email, password } = state;
     try {
       const response = await requestLogin('/login', { email, password });
+      setUser({
+        name: response.name,
+        email: response.email,
+        role: response.role,
+        token: response.token,
+      });
       navigate(`/${ROLE_PATH[response.role]}`);
     } catch (error) {
       setErrorMessage('Email inválido');
