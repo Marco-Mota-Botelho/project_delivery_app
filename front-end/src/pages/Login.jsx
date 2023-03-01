@@ -29,6 +29,7 @@ function Login() {
         email: response.email,
         role: response.role,
         token: response.token,
+        id: response.id,
       });
       navigate(`/${ROLE_PATH[response.role]}`);
     } catch (error) {
