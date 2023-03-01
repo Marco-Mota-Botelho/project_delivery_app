@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { requestLogin } from '../services/requests';
+import ROLE_PATH from '../utils/rolePaths';
 
 const MIN_PASSWORD_LENGTH = 6;
+const MIN_NAME_LENGTH = 12;
 
 function Login() {
+  const navigate = useNavigate();
   const [state, setState] = useState({ email: '', password: '', userName: '' });
   const [errorMessage, setErrorMessage] = useState('');
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
-    return !(checkEmail && state.password.length >= MIN_PASSWORD_LENGTH);
+    return !(checkEmail && state.password.length >= MIN_PASSWORD_LENGTH
+       && state.userName.length >= MIN_NAME_LENGTH);
   };
 
   const onInputChange = ({ target: { name, value } }) => {
@@ -19,8 +24,10 @@ function Login() {
   const handleClick = async () => {
     const { userName, email, password } = state;
     try {
-      const response = await requestLogin('/register', { userName, email, password });
+      const response = await
+      requestLogin('/register', { name: userName, email, password });
       console.log(response);
+      navigate(`/${ROLE_PATH.customer}`);
     } catch (error) {
       setErrorMessage(error.request.statusText);
       console.error(error);

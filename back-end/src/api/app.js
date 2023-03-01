@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const ErrorHandler = require('../middlewares/ErrorHandler');
-const usersRoutes = require('../routes/users.routes');
 const productsRoutes = require('../routes/products.routes');
+const { usersRoutes, registerRoutes } = require('../routes/users.routes');
 
 const app = express();
 
@@ -12,6 +12,8 @@ app.use(ErrorHandler.handler);
 
 app.use('/login', usersRoutes);
 app.use('/products', productsRoutes);
+app.use('/register', registerRoutes);
+
 
 app.use('/images', express.static('public'));
 app.get('/coffee', (_req, res) => res.status(418).end());
