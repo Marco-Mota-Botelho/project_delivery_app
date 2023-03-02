@@ -4,6 +4,7 @@ import CardProduct from '../components/CardProduct';
 import Navbar from '../components/Navbar';
 import { getProductsCard } from '../services/cartStorage';
 import { requestData } from '../services/requests';
+import { TEST_ID_PRODUCTS } from '../utils/dataTestsIds';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -59,13 +60,13 @@ function Products() {
       </section>
       <button
         type="button"
-        data-testid="customer_products__button-cart"
+        data-testid={ TEST_ID_PRODUCTS.BUTTON_CART }
         onClick={ handleClick }
         disabled={ totalPrice === 0 }
       >
         Ver Carrinho
         <span
-          data-testid="customer_products__checkout-bottom-value"
+          data-testid={ TEST_ID_PRODUCTS.BOTTOM_VALUE }
           style={ { padding: '10px' } }
         >
           { totalPrice }
