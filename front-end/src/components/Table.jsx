@@ -8,6 +8,7 @@ const {
 } = TEST_ID_CUSTOMER_ORDER_DETAILS;
 
 function Table({ products }) {
+  console.log(products);
   return (
     <TableStyle>
       <thead>
@@ -20,26 +21,27 @@ function Table({ products }) {
         </tr>
       </thead>
       <tbody>
-        { products && products.map((prod, i) => (
-          <tr key={ prod.id }>
-            <td data-testid={ `${PRODUCT_INDEX}-${i}` }>
-              {i + 1}
-            </td>
-            <td data-testid={ `${PRODUCT_NAME}-${i}` }>
-              {prod.name}
-            </td>
-            <td data-testid={ `${PRODUCT_COUNT}-${i}` }>
-              {prod.count}
-            </td>
-            <td data-testid={ `${PRODUCT_PRICE}-${i}` }>
-              {prod.price}
-
-            </td>
-            <td data-testid={ `${PRODUCT_TOTAL}-${i}` }>
-              { `R$ ${(+prod.count * +prod.price).toFixed(2)}` }
-            </td>
-          </tr>
-        ))}
+        { products && products.map(
+          ({ id, name, price, SaleProduct: { quantity } }, i) => (
+            <tr key={ id }>
+              <td data-testid={ `${PRODUCT_INDEX}-${i}` }>
+                {i + 1}
+              </td>
+              <td data-testid={ `${PRODUCT_NAME}-${i}` }>
+                { name }
+              </td>
+              <td data-testid={ `${PRODUCT_COUNT}-${i}` }>
+                { quantity }
+              </td>
+              <td data-testid={ `${PRODUCT_PRICE}-${i}` }>
+                { price.replace('.', ',') }
+              </td>
+              <td data-testid={ `${PRODUCT_TOTAL}-${i}` }>
+                {`R$ ${(+quantity * +price).toFixed(2).replace('.', ',')}` }
+              </td>
+            </tr>
+          ),
+        )}
       </tbody>
     </TableStyle>
   );
@@ -48,12 +50,7 @@ Table.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    totalPrice: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]).isRequired,
-    count: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
   })).isRequired,
 };
 
