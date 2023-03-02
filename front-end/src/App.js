@@ -6,6 +6,7 @@ import Products from './pages/Products';
 import Register from './pages/Register';
 import ThemeContext from './context/ThemeContext';
 import { lightTheme, darkTheme } from './styles/Theme/Theme';
+import OrderDetails from './pages/OrderDetails';
 
 function App() {
   const { isDark } = useContext(ThemeContext);
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/" element={ <Navigate replace to="/login" /> } />
         <Route exact path="/register" element={ <Register /> } />
         <Route exact path="/customer/products" element={ <Products /> } />
+        <Route exact path="/customer/orders/:id" element={ <OrderDetails /> } />
       </Routes>
     </ThemeProvider>
   );

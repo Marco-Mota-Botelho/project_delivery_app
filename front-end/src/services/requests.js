@@ -18,4 +18,9 @@ export const requestLogin = async (endpoint, body) => {
   return data;
 };
 
+export const requestOrder = async (endpoint, body) => {
+  const { data } = await api.get(endpoint, body);
+  return data;
+};
+
 export default api;

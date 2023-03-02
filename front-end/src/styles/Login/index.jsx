@@ -29,7 +29,6 @@ const InputLogin = styled.input`
   background: ${(props) => props.theme.background};
   color: ${(props) => props.theme.textColor};
 
-
   ::placeholder {
     color: ${(props) => props.theme.textColor};
     opacity: 0.4;
