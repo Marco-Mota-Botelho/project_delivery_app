@@ -1,12 +1,17 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 function CardOrder({ sale }) {
+  const navitage = useNavigate();
   const date = sale.saleDate.split('T');
   const formatingDate = date[0].split('-');
   const finalDate = `${formatingDate[2]}/${formatingDate[1]}/${formatingDate[0]}`;
   const finalPrice = `R$ ${sale.totalPrice.replace('.', ',')}`;
+  const handleClick = () => {
+    navitage(`/customer/orders/${sale.id}`);
+  };
   return (
-    <div>
+    <div onClick={ handleClick }>
       <section>
         <h1>
           Pedidos

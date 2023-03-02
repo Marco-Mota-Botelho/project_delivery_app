@@ -9,7 +9,7 @@ const create = async (req, res) => {
 const getByUserId = async (req, res) => {
   const { id } = req.params;
   const userSales = await SalesService.getByUserId(id);
-  if(userSales) return res.status(200).json(userSales);
-}
+  if (userSales) return res.status(200).json(userSales);
+};
 
 module.exports = { create, getByUserId };
