@@ -11,7 +11,7 @@ function CardOrder({ sale }) {
     navitage(`/customer/orders/${sale.id}`);
   };
   return (
-    <div onClick={ handleClick }>
+    <div>
       <section>
         <h1>
           Pedidos
