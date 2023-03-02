@@ -1,21 +1,46 @@
-export default function CardOrder() {
+import PropTypes from 'prop-types';
+
+function CardOrder({ sale }) {
+  const date = sale.saleDate.split('T');
+  const formatingDate = date[0].split('-');
+  const finalDate = `${formatingDate[2]}/${formatingDate[1]}/${formatingDate[0]}`;
+  const finalPrice = `R$ ${sale.totalPrice.replace('.', ',')}`;
   return (
     <div>
       <section>
-        <h2>
+        <h1>
           Pedidos
-          <h1 data-testid="customer_orders__element-order-id-<id>"> Id</h1>
-        </h2>
+          <span data-testid={ `customer_orders__element-order-id-${sale.id}` }>
+            { sale.id }
+          </span>
+        </h1>
       </section>
       <section>
-        <h1 data-testid="customer_orders__element-delivery-status-<id>"> Status </h1>
+        <h1 data-testid={ `customer_orders__element-delivery-status-${sale.id}` }>
+          {sale.status}
+        </h1>
       </section>
       <section>
-        <h1 data-testid="customer_orders__element-order-date-<id>">Date</h1>
+        <h1 data-testid={ `customer_orders__element-order-date-${sale.id}` }>
+          {finalDate}
+        </h1>
       </section>
       <section>
-        <h1 data-testid="customer_orders__element-card-price-<id>">Price</h1>
+        <h1 data-testid={ `customer_orders__element-card-price-${sale.id}` }>
+          {finalPrice}
+        </h1>
       </section>
     </div>
   );
 }
+
+CardOrder.propTypes = {
+  sale: PropTypes.shape({
+    id: PropTypes.number,
+    totalPrice: PropTypes.string,
+    saleDate: PropTypes.string,
+    status: PropTypes.string,
+  }).isRequired,
+};
+
+export default CardOrder;
