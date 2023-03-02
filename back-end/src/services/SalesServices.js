@@ -18,4 +18,10 @@ const getSalesBySaleId = async (saleId) => {
   return { status: 200, result };
 };
 
-module.exports = { create, getSalesBySaleId };
+const getByUserId = async (id) => {
+  const sales = await Sale.findAll({ where: { userId: id } });
+
+  return sales;
+};
+
+module.exports = { create, getByUserId, getSalesBySaleId };
