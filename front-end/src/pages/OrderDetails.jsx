@@ -18,7 +18,7 @@ function OrderDetails() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const data = await requestData('sales/1');
+        const data = await requestData('sales/saleId/1');
         setOrder(data);
         setTotalPrice(data.totalPrice.replace('.', ','));
         const newDate = new Date(data.saleDate);

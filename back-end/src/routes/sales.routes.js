@@ -5,7 +5,7 @@ const salesRoutes = Router();
 
 salesRoutes.post('/', SalesController.create);
 
-salesRoutes.get('/:id', SalesController.getSalesBySaleId);
+salesRoutes.get('/saleId/:id', SalesController.getSalesBySaleId);
 
 salesRoutes.get('/:id', SalesController.getByUserId);
 
