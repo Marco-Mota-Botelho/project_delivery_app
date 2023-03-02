@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 function CardOrder({ sale }) {
-  const navitage = useNavigate();
+  // const navitage = useNavigate();
   const date = sale.saleDate.split('T');
   const formatingDate = date[0].split('-');
   const finalDate = `${formatingDate[2]}/${formatingDate[1]}/${formatingDate[0]}`;
