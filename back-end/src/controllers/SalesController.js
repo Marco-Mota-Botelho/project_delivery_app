@@ -6,4 +6,12 @@ const create = async (req, res) => {
   if (result) return res.status(201).json(result);
 };
 
-module.exports = { create };
+const getSalesBySaleId = async (req, res) => {
+  const { id } = req.params;
+  const { message, result, status } = await SalesService.getSalesBySaleId(id);
+  if (message) return res.status(status).json(message);
+
+  return res.status(status).json(result);
+};
+
+module.exports = { create, getSalesBySaleId };

@@ -9,7 +9,6 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(name, email, password);
   const { status, result, message } = await UserServices.register({ name, email, password });
   if (message) return res.status(status).json({ message });
   return res.status(status).json(result);
