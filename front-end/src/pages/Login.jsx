@@ -13,6 +13,7 @@ function Login() {
   const [state, setState] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
@@ -34,19 +35,19 @@ function Login() {
         token: response.token,
         id: response.id,
       });
-      navigate(`/${ROLE_PATH[response.role]}`);
+      if (response?.role === 'customer') navigate(`/${ROLE_PATH[response.role]}`);
+      if (response?.role === 'seller') navigate(`/${ROLE_PATH[response.role]}`);
     } catch (error) {
       setErrorMessage('Email inválido');
       console.error(error);
     }
   };
 
-  const user = JSON.parse(localStorage.getItem('user'));
-
   useEffect(() => {
     setErrorMessage('');
-    if (user.token) navigate('/customer/products');
-  }, [state]);
+    if (user?.role === 'customer') navigate(`/${ROLE_PATH[user.role]}`);
+    if (user?.role === 'seller') navigate(`/${ROLE_PATH[user.role]}`);
+  }, [user, navigate]);
 
   return (
     <ContainerLogin>
