@@ -1,4 +1,4 @@
-import React from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TableStyle from '../styles/Table/TableStyles';
 import { TEST_ID_CUSTOMER_ORDER_DETAILS } from '../utils/dataTestsIds';
@@ -8,6 +8,10 @@ const {
 } = TEST_ID_CUSTOMER_ORDER_DETAILS;
 
 function OrderTable({ products }) {
+  const { pathname } = useLocation();
+
+  const role = pathname.includes('customer') ? 'customer' : 'seller';
+
   return (
     <TableStyle>
       <thead>
@@ -23,19 +27,19 @@ function OrderTable({ products }) {
         { products && products.map(
           ({ id, name, price, SaleProduct: { quantity } }, i) => (
             <tr key={ id }>
-              <td data-testid={ `${PRODUCT_INDEX}-${i}` }>
+              <td data-testid={ `${role}${PRODUCT_INDEX}-${i}` }>
                 {i + 1}
               </td>
-              <td data-testid={ `${PRODUCT_NAME}-${i}` }>
+              <td data-testid={ `${role}${PRODUCT_NAME}-${i}` }>
                 { name }
               </td>
-              <td data-testid={ `${PRODUCT_COUNT}-${i}` }>
+              <td data-testid={ `${role}${PRODUCT_COUNT}-${i}` }>
                 { quantity }
               </td>
-              <td data-testid={ `${PRODUCT_PRICE}-${i}` }>
+              <td data-testid={ `${role}${PRODUCT_PRICE}-${i}` }>
                 { price.replace('.', ',') }
               </td>
-              <td data-testid={ `${PRODUCT_TOTAL}-${i}` }>
+              <td data-testid={ `${role}${PRODUCT_TOTAL}-${i}` }>
                 {`R$ ${(+quantity * +price).toFixed(2).replace('.', ',')}` }
               </td>
             </tr>
