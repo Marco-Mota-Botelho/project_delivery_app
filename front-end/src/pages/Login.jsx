@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { requestLogin } from '../services/requests';
 import ROLE_PATH from '../utils/rolePaths';
 import { setUser } from '../services/userStorage';
+import { ContainerLogin, BoxForm, InputLogin, ButtonLogin,
+  TitleBoxLogin, SpanErrorLogin } from '../styles/Login';
+import Header from '../components/Header';
 
 const MIN_PASSWORD_LENGTH = 6;
 
@@ -43,45 +46,53 @@ function Login() {
   }, [state]);
 
   return (
-    <div>
-      <input
-        type="email"
-        data-testid="common_login__input-email"
-        name="email"
-        placeholder="Digite seu email"
-        onChange={ onInputChange }
-        value={ state.email }
-      />
-      <input
-        type="text"
-        data-testid="common_login__input-password"
-        name="password"
-        placeholder="Digite sua senha"
-        onChange={ onInputChange }
-        value={ state.password }
-      />
-      <button
-        type="button"
-        data-testid="common_login__button-login"
-        disabled={ validateLogin() }
-        onClick={ handleClick }
-      >
-        LOGIN
-      </button>
-      <Link to="/register">
-        <button
+    <ContainerLogin>
+      <Header />
+
+      <BoxForm>
+
+        <TitleBoxLogin>Login</TitleBoxLogin>
+
+        <InputLogin
+          type="email"
+          data-testid="common_login__input-email"
+          name="email"
+          placeholder="Digite seu email"
+          onChange={ onInputChange }
+          value={ state.email }
+        />
+        <InputLogin
+          type="text"
+          data-testid="common_login__input-password"
+          name="password"
+          placeholder="Digite sua senha"
+          onChange={ onInputChange }
+          value={ state.password }
+        />
+        <ButtonLogin
           type="button"
-          data-testid="common_login__button-register"
+          className="first"
+          data-testid="common_login__button-login"
+          disabled={ validateLogin() }
+          onClick={ handleClick }
         >
-          AINDA NÃO TENHO CONTA
-        </button>
-      </Link>
+          LOGIN
+        </ButtonLogin>
+        <Link to="/register">
+          <ButtonLogin
+            type="button"
+            data-testid="common_login__button-register"
+          >
+            AINDA NÃO TENHO CONTA
+          </ButtonLogin>
+        </Link>
 
-      <span data-testid="common_login__element-invalid-email">
-        { errorMessage }
-      </span>
+        <SpanErrorLogin data-testid="common_login__element-invalid-email">
+          { errorMessage }
+        </SpanErrorLogin>
+      </BoxForm>
 
-    </div>
+    </ContainerLogin>
   );
 }
 
