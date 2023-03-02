@@ -46,6 +46,7 @@ function Checkout() {
     setToken(user.token);
     const result = await requestLogin('/sales', sales);
     navigate(`/customer/orders/${result.id}`);
+    localStorage.removeItem('cart');
   };
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
