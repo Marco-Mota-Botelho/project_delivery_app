@@ -7,9 +7,9 @@ function CardOrder({ sale }) {
   const formatingDate = date[0].split('-');
   const finalDate = `${formatingDate[2]}/${formatingDate[1]}/${formatingDate[0]}`;
   const finalPrice = `R$ ${sale.totalPrice.replace('.', ',')}`;
-  const handleClick = () => {
-    navitage(`/customer/orders/${sale.id}`);
-  };
+  // const handleClick = () => {
+  //  navitage(`/customer/orders/${sale.id}`);
+  // };
   return (
     <div>
       <section>
