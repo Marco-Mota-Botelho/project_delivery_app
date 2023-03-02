@@ -11,19 +11,11 @@ import { lightTheme, darkTheme } from './styles/Theme/Theme';
 
 function App() {
   const { isDark } = useContext(ThemeContext);
-  const user = JSON.parse(localStorage.getItem('user'));
-
   return (
     <ThemeProvider theme={ isDark ? darkTheme : lightTheme }>
       <Routes>
         <Route exact path="/login" element={ <Login /> } />
-        <Route
-          exact
-          path="/"
-          element={ user.token
-            ? <Navigate replace to="/customer/products" />
-            : <Navigate replace to="/login" /> }
-        />
+        <Route exact path="/" element={ <Navigate replace to="/login" /> } />
         <Route exact path="/register" element={ <Register /> } />
         <Route exact path="/customer/products" element={ <Products /> } />
         <Route exact path="/customer/checkout" element={ <Checkout /> } />
