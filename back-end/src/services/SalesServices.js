@@ -10,4 +10,10 @@ const create = async (sale) => {
   return result;
 };
 
-module.exports = { create };
+const getByUserId = async (id) => {
+  const sales = await Sale.findAll({ where: { userId: id } });
+
+  return sales;
+};
+
+module.exports = { create, getByUserId };

@@ -21,7 +21,7 @@ export default function NavBar() {
         <li>
           <NavLink
             data-testid="customer_products__element-navbar-link-products"
-            to="/produtos"
+            to="/customer/products"
           >
             Produtos
           </NavLink>
@@ -29,7 +29,7 @@ export default function NavBar() {
         <li>
           <NavLink
             data-testid="customer_products__element-navbar-link-orders"
-            to="/pedidos"
+            to="/customer/orders"
           >
             Pedidos
           </NavLink>
