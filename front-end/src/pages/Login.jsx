@@ -41,8 +41,11 @@ function Login() {
     }
   };
 
+  const user = JSON.parse(localStorage.getItem('user'));
+
   useEffect(() => {
     setErrorMessage('');
+    if (user.token) navigate('/customer/products');
   }, [state]);
 
   return (

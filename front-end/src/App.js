@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import Products from './pages/Products';
 import Register from './pages/Register';
@@ -12,19 +12,10 @@ import OrderDetails from './pages/OrderDetails';
 
 function App() {
   const { isDark } = useContext(ThemeContext);
-  const user = JSON.parse(localStorage.getItem('user'));
-
   return (
     <ThemeProvider theme={ isDark ? darkTheme : lightTheme }>
       <Routes>
         <Route exact path="/login" element={ <Login /> } />
-        <Route
-          exact
-          path="/"
-          element={ user.token
-            ? <Navigate replace to="/customer/products" />
-            : <Navigate replace to="/login" /> }
-        />
         <Route exact path="/register" element={ <Register /> } />
         <Route exact path="/customer/products" element={ <Products /> } />
         <Route exact path="/customer/orders/:id" element={ <OrderDetails /> } />
