@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/Navbar';
 import { requestData } from '../services/requests';
-import Table from '../components/Table';
+import OrderTable from '../components/OrderTable';
 import { TEST_ID_CUSTOMER_ORDER_DETAILS } from '../utils/dataTestsIds';
 
 const { ORDER_ID, ORDER_DATE, DELIVERY_STATUS,
@@ -58,7 +58,7 @@ function OrderDetails() {
             MARCAR COMO ENTREGUE
           </button>
 
-          <Table products={ order.products } />
+          <OrderTable products={ order.products } />
           <span data-testid={ TOTAL_PRICE }>
             {totalPrice}
           </span>

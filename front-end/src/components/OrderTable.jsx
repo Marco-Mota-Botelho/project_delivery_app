@@ -7,8 +7,7 @@ const {
   PRODUCT_INDEX, PRODUCT_NAME, PRODUCT_COUNT, PRODUCT_PRICE, PRODUCT_TOTAL,
 } = TEST_ID_CUSTOMER_ORDER_DETAILS;
 
-function Table({ products }) {
-  console.log(products);
+function OrderTable({ products }) {
   return (
     <TableStyle>
       <thead>
@@ -46,7 +45,7 @@ function Table({ products }) {
     </TableStyle>
   );
 }
-Table.propTypes = {
+OrderTable.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -54,4 +53,4 @@ Table.propTypes = {
   })).isRequired,
 };
 
-export default Table;
+export default OrderTable;
