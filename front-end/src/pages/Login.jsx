@@ -35,9 +35,7 @@ function Login() {
         token: response.token,
         id: response.id,
       });
-      if (response?.role === 'customer') navigate(`/${ROLE_PATH[response.role]}`);
-      if (response?.role === 'seller') navigate(`/${ROLE_PATH[response.role]}`);
-      if (response?.role === 'administrator') navigate(`/${ROLE_PATH[response.role]}`);
+      navigate(`/${ROLE_PATH[response.role]}`);
     } catch (error) {
       setErrorMessage('Email inválido');
       console.error(error);

@@ -24,9 +24,7 @@ function Login() {
   const handleClick = async () => {
     const { userName, email, password } = state;
     try {
-      const response = await
-      requestLogin('/register', { name: userName, email, password });
-      console.log(response);
+      await requestLogin('/register', { name: userName, email, password });
       navigate(`/${ROLE_PATH.customer}`);
     } catch (error) {
       setErrorMessage(error.request.statusText);

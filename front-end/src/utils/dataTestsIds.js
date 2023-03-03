@@ -10,6 +10,8 @@ const TEST_ID_CUSTOMER_ORDER_DETAILS = {
   PRODUCT_TOTAL: '_order_details__element-order-table-sub-total-',
   TOTAL_PRICE: '_order_details__element-order-total-price',
   DELIVERY_CHECK: '_order_details__button-delivery-check',
+  PREPARING_CHECK: '_order_details__button-preparing-check',
+  DISPATCH_CHECK: '_order_details__button-dispatch-check',
 };
 
 const TEST_ID_CUSTOMER_ORDER = {

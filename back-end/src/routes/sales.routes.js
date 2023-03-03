@@ -11,4 +11,6 @@ salesRoutes.get('/customer/:id', SalesController.getByUserId);
 
 salesRoutes.get('/seller/:id', SalesController.getBySellerId);
 
+salesRoutes.put('/seller/updateStatus/:id', SalesController.updateStatusSale);
+
 module.exports = salesRoutes;
