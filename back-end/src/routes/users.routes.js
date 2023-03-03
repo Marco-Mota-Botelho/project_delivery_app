@@ -6,5 +6,6 @@ const registerRoutes = Router();
 
 usersRoutes.post('/', UsersController.login);
 registerRoutes.post('/', UsersController.register);
+registerRoutes.post('/manage', UsersController.admRegister);
 
 module.exports = { usersRoutes, registerRoutes };
