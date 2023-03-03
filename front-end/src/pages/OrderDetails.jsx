@@ -23,8 +23,10 @@ function OrderDetails() {
         const data = await requestData(`sales/saleId/${id}`);
         setOrder(data);
         setTotalPrice(data.totalPrice.replace('.', ','));
-        const newDate = new Date(data.saleDate);
-        setFormattedDate(newDate.toLocaleDateString('pt-BR'));
+        const date = data.saleDate.split('T');
+        const formatingDate = date[0].split('-');
+        const finalDate = `${formatingDate[2]}/${formatingDate[1]}/${formatingDate[0]}`;
+        setFormattedDate(finalDate);
         setRole(getUser());
       } catch (error) {
         console.log(error);
