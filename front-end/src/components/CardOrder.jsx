@@ -8,14 +8,15 @@ const { ORDER_ID, DELIVERY_STATUS, ORDER_DATE, PRICE } = TEST_ID_CUSTOMER_ORDER;
 
 function CardOrder({ sale }) {
   const [user, setRole] = useState({ role: 'customer' });
-  const date = sale.saleDate.split('T');
-  const formatingDate = date[0].split('-');
-  const finalDate = `${formatingDate[2]}/${formatingDate[1]}/${formatingDate[0]}`;
+
+  const finalDate = new Date(sale.saleDate).toLocaleDateString('pt-BR');
   const finalPrice = `R$ ${sale.totalPrice.replace('.', ',')}`;
 
   useEffect(() => {
     setRole(getUser());
   }, []);
+
+  console.log(sale);
 
   return (
     <div>
@@ -24,7 +25,7 @@ function CardOrder({ sale }) {
           <h1>
             Pedidos
             <span data-testid={ `${user.role}${ORDER_ID}${sale.id}` }>
-              { sale.id }
+              {sale.id}
             </span>
           </h1>
         </section>
