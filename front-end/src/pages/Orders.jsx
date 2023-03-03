@@ -8,7 +8,7 @@ function Orders() {
   const [sales, setSales] = useState(null);
   const fetchSales = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const response = await requestData(`/sales/${user.id}`);
+    const response = await requestData(`/sales/${user.role}/${user.id}`);
     setSales(response);
   };
 
