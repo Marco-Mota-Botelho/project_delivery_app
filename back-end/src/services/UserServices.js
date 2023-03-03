@@ -29,4 +29,12 @@ const register = async ({ name, email, password }) => {
   return { status: HttpStatusCode.CREATED, result };
 };
 
-module.exports = { login, register };
+const admRegister = async ({ name, email, password, role }) => {
+  const codedPassword = md5(password);
+  const findUser = await User.findOne({ where: { email } });
+  if (findUser) return { status: HttpStatusCode.CONFLICT };
+  const result = await User.create({ name, email, password: codedPassword, role });
+  return { status: HttpStatusCode.CREATED, result };
+};
+
+module.exports = { login, register, admRegister };

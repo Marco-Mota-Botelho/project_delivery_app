@@ -24,4 +24,16 @@ const TEST_ID_PRODUCTS = {
   BOTTOM_VALUE: 'customer_products__checkout-bottom-value',
 };
 
-export { TEST_ID_CUSTOMER_ORDER_DETAILS, TEST_ID_CUSTOMER_ORDER, TEST_ID_PRODUCTS };
+const TEST_ID_MANAGE = {
+  INPUT_NAME: 'admin_manage__input-name',
+  INPUT_EMAIL: 'admin_manage__input-email',
+  INPUT_PASSWORD: 'admin_manage__input-password',
+  MANAGE_REGISTER_BUTTON: 'admin_manage__button-register',
+  MANAGE_SELECT_ROLE: 'admin_manage__select-role',
+  MANAGE_INVALID_MESSAGE: 'admin_manage__element-invalid-register',
+};
+
+export { TEST_ID_CUSTOMER_ORDER_DETAILS,
+  TEST_ID_CUSTOMER_ORDER,
+  TEST_ID_PRODUCTS,
+  TEST_ID_MANAGE };
