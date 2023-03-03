@@ -3,6 +3,12 @@ const PRODUCT_KEY = 'cart';
 if (!JSON.parse(localStorage.getItem(PRODUCT_KEY))) {
   localStorage.setItem(PRODUCT_KEY, JSON.stringify([]));
 }
+
+export const removeCart = () => {
+  localStorage.removeItem(PRODUCT_KEY);
+  localStorage.setItem(PRODUCT_KEY, JSON.stringify([]));
+};
+
 const readProductCard = () => JSON.parse(localStorage.getItem(PRODUCT_KEY));
 
 const saveProductCard = (product) => localStorage

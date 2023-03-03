@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { requestLogin, setToken } from '../services/requests';
-import { getProductsCard, removeProduct } from '../services/cartStorage';
+import { getProductsCard, removeCart, removeProduct } from '../services/cartStorage';
 
 function Checkout() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function Checkout() {
 
   const sumTotalPrice = () => {
     const allProducts = getProductsCard();
-    if (allProducts.length) {
+    if (allProducts?.length) {
       const value = allProducts.reduce((acc, curr) => (
         curr.totalPrice ? acc + +curr.totalPrice : acc + +curr.price
       ), 0);
@@ -42,11 +42,10 @@ function Checkout() {
       status: 'Pendente',
       products,
     };
-    console.log(state.seller);
     setToken(user.token);
     const result = await requestLogin('/sales', sales);
     navigate(`/customer/orders/${result.id}`);
-    localStorage.removeItem('cart');
+    removeCart();
   };
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));

@@ -29,7 +29,7 @@ export default function NavBar() {
         <li>
           <NavLink
             data-testid="customer_products__element-navbar-link-orders"
-            to="/customer/orders"
+            to={ `/${user.role}/orders` }
           >
             Pedidos
           </NavLink>

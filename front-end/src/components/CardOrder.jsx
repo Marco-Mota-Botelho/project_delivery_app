@@ -23,7 +23,7 @@ function CardOrder({ sale }) {
       <Link to={ `/${user.role}/orders/${sale.id}` }>
         <section>
           <h1>
-            Pedidos
+            Pedido:
             <span data-testid={ `${user.role}${ORDER_ID}${sale.id}` }>
               {sale.id}
             </span>

@@ -26,4 +26,13 @@ const getBySellerId = async (req, res) => {
   if (sellerSales) return res.status(200).json(sellerSales);
 };
 
-module.exports = { create, getByUserId, getSalesBySaleId, getBySellerId };
+const updateStatusSale = async (req, res) => {
+  const { SaleStatus } = req.body;
+  const { id } = req.params;
+  const { message, status } = await SalesService.updateStatusSale(SaleStatus, id);
+  if (message) return res.status(status).json({ message });
+
+  return res.status(status).json();
+};
+
+module.exports = { create, getByUserId, getSalesBySaleId, getBySellerId, updateStatusSale };

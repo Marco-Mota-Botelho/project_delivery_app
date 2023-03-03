@@ -1,4 +1,4 @@
-const { Sale, SaleProduct, Product } = require('../database/models');
+const { Sale, SaleProduct, Product, User } = require('../database/models');
 
 const create = async (sale) => {
   const saleDate = new Date();
@@ -12,7 +12,10 @@ const create = async (sale) => {
 
 const getSalesBySaleId = async (saleId) => {
   const result = await Sale.findByPk(saleId, {
-    include: { model: Product, as: 'products' },
+    include: [
+      { model: Product, as: 'products' },
+      { model: User, as: 'seller', attributes: { exclude: ['password', 'role', 'email'] } },
+    ],
   });
   if (!result) return { status: 404, message: 'No Found' };
   return { status: 200, result };
@@ -28,4 +31,12 @@ const getBySellerId = async (id) => {
   return sales;
 };
 
-module.exports = { create, getByUserId, getSalesBySaleId, getBySellerId };
+const updateStatusSale = async (SaleStatus, saleId) => {
+  console.log(SaleStatus, saleId);
+  const result = await Sale.update({ status: SaleStatus }, { where: { id: saleId } });
+  if (!result) return { status: 404, message: 'Not Found' };
+
+  return { status: 202 };
+};
+
+module.exports = { create, getByUserId, getSalesBySaleId, getBySellerId, updateStatusSale };
