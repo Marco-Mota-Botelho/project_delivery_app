@@ -13,7 +13,7 @@ function Products() {
 
   const sumTotalPrice = () => {
     const allProducts = getProductsCard();
-    if (allProducts?.length) {
+    if (allProducts?.length) { // null fix
       const value = allProducts.reduce((acc, curr) => (
         curr.totalPrice ? acc + +curr.totalPrice : acc + +curr.price
       ), 0);

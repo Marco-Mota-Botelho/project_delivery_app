@@ -37,7 +37,7 @@ function CardProduct({ product, sumTotalPrice }) {
 
   useEffect(() => {
     const allProducts = getProductsCard();
-    const checkProduct = allProducts?.find((prod) => prod.id === product.id);
+    const checkProduct = allProducts?.find((prod) => prod.id === product.id); // null fix
     if (checkProduct) setCount(checkProduct.count);
   }, [product]);
 

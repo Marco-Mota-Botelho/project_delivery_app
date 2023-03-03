@@ -13,7 +13,6 @@ const { ORDER_ID, ORDER_DATE, DELIVERY_STATUS,
 function OrderDetails() {
   const [order, setOrder] = useState(null);
   const [totalPrice, setTotalPrice] = useState(null);
-  const [formattedDate, setFormattedDate] = useState(null);
   const [user, setRole] = useState({ role: 'customer' });
   const { id } = useParams();
 
@@ -23,8 +22,6 @@ function OrderDetails() {
         const data = await requestData(`sales/saleId/${id}`);
         setOrder(data);
         setTotalPrice(data.totalPrice.replace('.', ','));
-        const newDate = new Date(data.saleDate);
-        setFormattedDate(newDate.toLocaleDateString('pt-BR'));
         setRole(getUser());
       } catch (error) {
         console.log(error);
@@ -47,7 +44,7 @@ function OrderDetails() {
             Fulana Pereira
           </p>
           <span data-testid={ `${user.role}${ORDER_DATE}` }>
-            { formattedDate }
+            { order.saleDate }
           </span>
           <span data-testid={ `${user.role}${DELIVERY_STATUS}-1` }>
             { order.status}
