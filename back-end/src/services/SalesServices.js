@@ -1,7 +1,7 @@
 const { Sale, SaleProduct, Product } = require('../database/models');
 
 const create = async (sale) => {
-  const saleDate = new Date().toLocaleDateString('pt-BR');
+  const saleDate = new Date();
   const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status, products } = sale;
   const result = await Sale
   .create({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status });
