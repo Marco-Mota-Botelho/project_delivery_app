@@ -37,4 +37,17 @@ const admRegister = async ({ name, email, password, role }) => {
   return { status: HttpStatusCode.CREATED, result };
 };
 
-module.exports = { login, register, admRegister };
+const getAllUsers = async () => {
+  const result = await User.findAll(
+    { where: { role: ['customer', 'seller'] } },
+    { attributes: { exclude: ['password'] } },
+    );
+  return result;
+};
+
+const deleteUser = async (id) => {
+  await User.destroy({ where: { id } });
+  return true;
+};
+
+module.exports = { login, register, admRegister, getAllUsers, deleteUser };
