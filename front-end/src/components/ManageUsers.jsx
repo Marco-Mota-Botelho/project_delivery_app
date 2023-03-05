@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import TableStyle from '../styles/Table/TableStyles';
-import { destroyData, requestData, setToken } from '../services/requests';
+import { destroyData, requestData } from '../services/requests';
 import { TEST_ID_MANAGE_TABLE } from '../utils/dataTestsIds';
 
 function ManageUsers(render) {
@@ -16,8 +16,6 @@ function ManageUsers(render) {
   } = TEST_ID_MANAGE_TABLE;
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    setToken(user.token);
     async function fetchData() {
       try {
         const result = await requestData('/register/manage');
