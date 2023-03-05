@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { requestLogin, setToken } from '../services/requests';
 import { TEST_ID_MANAGE } from '../utils/dataTestsIds';
 import Navbar from '../components/Navbar';
-// import ROLE_PATH from '../utils/rolePaths';
+import ManageUsers from '../components/ManageUsers';
 
 const {
   INPUT_NAME,
@@ -17,10 +16,16 @@ const {
 const MIN_PASSWORD_LENGTH = 6;
 const MIN_NAME_LENGTH = 12;
 
-function Login() {
+function Manage() {
   // const navigate = useNavigate();
-  const [state, setState] = useState({ email: '', password: '', userName: '', role: '' });
+  const [state, setState] = useState(
+    { email: '',
+      password: '',
+      userName: '',
+      role: 'customer' },
+  );
   const [errorMessage, setErrorMessage] = useState('');
+  const [render, setRender] = useState(false);
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
@@ -42,6 +47,7 @@ function Login() {
       console.log(response);
       setState({ email: '', password: '', userName: '', role: '' });
       // navigate(`/${ROLE_PATH.customer}`);
+      setRender(true);
     } catch (error) {
       setErrorMessage(error.request.statusText);
       console.error(error);
@@ -50,6 +56,7 @@ function Login() {
 
   useEffect(() => {
     setErrorMessage('');
+    setRender(false);
   }, [state]);
 
   return (
@@ -100,9 +107,9 @@ function Login() {
       <span data-testid={ MANAGE_INVALID_MESSAGE }>
         { errorMessage }
       </span>
-
+      <ManageUsers render={ render } />
     </div>
   );
 }
 
-export default Login;
+export default Manage;

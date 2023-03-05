@@ -35,7 +35,17 @@ const TEST_ID_MANAGE = {
   MANAGE_INVALID_MESSAGE: 'admin_manage__element-invalid-register',
 };
 
+const TEST_ID_MANAGE_TABLE = {
+  ITEM_NUMBER: 'admin_manage__element-user-table-item-number-',
+  ITEM_NAME: 'admin_manage__element-user-table-name-',
+  ITEM_EMAIL: 'admin_manage__element-user-table-email-',
+  ITEM_ROLE: 'admin_manage__element-user-table-role-',
+  ITEM_REMOVE_BUTTON: 'admin_manage__element-user-table-remove-',
+  ITEM_ERROR: 'admin_manage__element-invalid-register',
+};
+
 export { TEST_ID_CUSTOMER_ORDER_DETAILS,
   TEST_ID_CUSTOMER_ORDER,
   TEST_ID_PRODUCTS,
-  TEST_ID_MANAGE };
+  TEST_ID_MANAGE,
+  TEST_ID_MANAGE_TABLE };

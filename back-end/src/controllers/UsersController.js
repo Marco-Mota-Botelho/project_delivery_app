@@ -32,4 +32,17 @@ const admRegister = async (req, res) => {
   return res.status(status).json(result);
 };
 
-module.exports = { login, register, admRegister };
+const getAllUsers = async (_req, res) => {
+  const result = await UserServices.getAllUsers();
+  if (!result) return res.status(400).json({ message: 'No users' });
+  return res.status(200).json(result);
+};
+
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const result = await UserServices.deleteUser(id);
+  if (result === false) return res.status(401).json({ message: 'No such user' });
+  if (result === true) return res.status(204).json();
+};
+
+module.exports = { login, register, admRegister, getAllUsers, deleteUser };

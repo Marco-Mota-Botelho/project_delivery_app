@@ -25,7 +25,7 @@ const register = async ({ name, email, password }) => {
   const codedPassword = md5(password);
   const findUser = await User.findOne({ where: { email } });
   if (findUser) return { status: HttpStatusCode.CONFLICT };
-  const result = await User.create({ name, email, password: codedPassword });
+  const result = await User.create({ name, email, password: codedPassword, role: 'customer' });
   return { status: HttpStatusCode.CREATED, result };
 };
 
@@ -37,4 +37,17 @@ const admRegister = async ({ name, email, password, role }) => {
   return { status: HttpStatusCode.CREATED, result };
 };
 
-module.exports = { login, register, admRegister };
+const getAllUsers = async () => {
+  const result = await User.findAll(
+    { where: { role: ['customer', 'seller'] } },
+    { attributes: { exclude: ['password'] } },
+    );
+  return result;
+};
+
+const deleteUser = async (id) => {
+  await User.destroy({ where: { id } });
+  return true;
+};
+
+module.exports = { login, register, admRegister, getAllUsers, deleteUser };
