@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { requestLogin, setToken } from '../services/requests';
 import { TEST_ID_MANAGE } from '../utils/dataTestsIds';
 import Navbar from '../components/Navbar';
 import ManageUsers from '../components/ManageUsers';
-// import ROLE_PATH from '../utils/rolePaths';
 
 const {
   INPUT_NAME,
@@ -18,7 +16,7 @@ const {
 const MIN_PASSWORD_LENGTH = 6;
 const MIN_NAME_LENGTH = 12;
 
-function Login() {
+function Manage() {
   // const navigate = useNavigate();
   const [state, setState] = useState({ email: '', password: '', userName: '', role: '' });
   const [errorMessage, setErrorMessage] = useState('');
@@ -109,4 +107,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Manage;
