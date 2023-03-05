@@ -18,7 +18,12 @@ const MIN_NAME_LENGTH = 12;
 
 function Manage() {
   // const navigate = useNavigate();
-  const [state, setState] = useState({ email: '', password: '', userName: '', role: '' });
+  const [state, setState] = useState(
+    { email: '',
+      password: '',
+      userName: '',
+      role: 'customer' },
+  );
   const [errorMessage, setErrorMessage] = useState('');
   const [render, setRender] = useState(false);
 
