@@ -16,8 +16,6 @@ function CardOrder({ sale }) {
     setRole(getUser());
   }, []);
 
-  console.log(sale);
-
   return (
     <div>
       <Link to={ `/${user.role}/orders/${sale.id}` }>

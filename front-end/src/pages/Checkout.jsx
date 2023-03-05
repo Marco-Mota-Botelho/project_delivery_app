@@ -8,7 +8,7 @@ import { getProductsCard, removeCart, removeProduct } from '../services/cartStor
 function Checkout() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [state, setState] = useState({ address: '', addressNumber: '', seller: 1 });
+  const [state, setState] = useState({ address: '', addressNumber: '', seller: 2 });
   const [totalPrice, setTotalPrice] = useState(0);
 
   const onInputChange = ({ target: { name, value } }) => {
@@ -125,9 +125,9 @@ function Checkout() {
           onChange={ onInputChange }
           value={ state.seller }
         >
-          <option value={ 1 }>Vendedor Vinicius</option>
-          <option value={ 2 }>Vendedor Furtado</option>
-          <option value={ 3 }>Vendedor Botelho</option>
+          <option value={ 1 }>Vendedor 1</option>
+          <option value={ 2 }>Vendedor 2</option>
+          <option value={ 3 }>Vendedor 3</option>
         </select>
         <input
           type="text"
