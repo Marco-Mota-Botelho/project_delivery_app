@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TableStyle from '../styles/Table/TableStyles';
 import Navbar from '../components/Navbar';
 import { requestLogin, setToken } from '../services/requests';
 import { getProductsCard, removeCart, removeProduct } from '../services/cartStorage';
@@ -58,15 +59,18 @@ function Checkout() {
     <div>
       <Navbar />
       <h3>Checkout</h3>
-      <table>
-        <tbody>
+      <TableStyle>
+        <thead>
           <tr>
             <th>Item</th>
             <th>Descrição</th>
             <th>Quant...</th>
             <th>Valor Un...</th>
             <th>Sub-total</th>
+            <th>Remover</th>
           </tr>
+        </thead>
+        <tbody>
           {products.map((product, i) => (
             <tr key={ product.id }>
               <td
@@ -107,7 +111,7 @@ function Checkout() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </TableStyle>
       <span
         data-testid="customer_checkout__element-order-total-price"
         style={ { padding: '10px' } }
