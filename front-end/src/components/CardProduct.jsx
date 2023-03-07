@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { addProduct, removeProduct, getProductsCard } from '../services/cartStorage';
+import { BoxButtons, BtnDifference, BtnSum, CartProduct,
+  PriceProduct, TitleProduct } from '../styles/Products';
 
 function CardProduct({ product, sumTotalPrice }) {
   const { price, name, urlImage, id } = product;
@@ -42,46 +44,46 @@ function CardProduct({ product, sumTotalPrice }) {
   }, [product]);
 
   return (
-    <div>
-      <span
-        data-testid={ `customer_products__element-card-price-${id}` }
+    <CartProduct>
+      <TitleProduct
+        data-testid={ `customer_products__element-card-title-${id}` }
       >
-        {price.replace('.', ',')}
-      </span>
+        {name}
+      </TitleProduct>
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         src={ urlImage }
         alt={ name }
-        style={ { width: '150px', height: '150px', objectFit: 'cover' } }
       />
-      <span
-        data-testid={ `customer_products__element-card-title-${id}` }
+      <PriceProduct
+        data-testid={ `customer_products__element-card-price-${id}` }
       >
-        {name}
-      </span>
-      <div>
-        <button
+        {price.replace('.', ',')}
+      </PriceProduct>
+      <BoxButtons>
+        <BtnSum
           type="button"
-          data-testid={ `customer_products__button-card-rm-item-${id}` }
+          data-testid={ `customer_products__button-card-add-item-${id}` }
           onClick={ handleCount }
+          className="btn-plus"
         >
-          -
-        </button>
+          +
+        </BtnSum>
         <input
           data-testid={ `customer_products__input-card-quantity-${id}` }
           type="number"
           value={ count }
           onChange={ onInputChange }
         />
-        <button
+        <BtnDifference
           type="button"
-          data-testid={ `customer_products__button-card-add-item-${id}` }
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
           onClick={ handleCount }
         >
-          +
-        </button>
-      </div>
-    </div>
+          -
+        </BtnDifference>
+      </BoxButtons>
+    </CartProduct>
   );
 }
 

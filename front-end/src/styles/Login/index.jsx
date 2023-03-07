@@ -1,19 +1,44 @@
 import styled from 'styled-components';
-import container from '../container';
+import containerFlex from '../container';
+import backgroundDelivery from '../../assets/images/delivery-removebg-preview.png';
+import simpleBtn from '../button';
 
-const ContainerLogin = styled(container)`
+const ContainerLogin = styled(containerFlex)`
+  position: relative;
   width: 100vw;
   height: 100vh;
-  background: ${(props) => props.theme.background};
-  flex-direction: column;
+  padding: 1rem;
+  background-color: ${(props) => props.theme.background};
+  gap: 4rem;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    padding: 0;
+  }
 `;
 
-const BoxForm = styled(container)`
+const BoxImage = styled.div`
+  background-image: url(${backgroundDelivery});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 40%;
+  height: 100%;
+
+  @media screen and (max-width: 600px) {
+    height: 20%;
+    width: 100%;
+    position: absolute;
+    top: calc(1rem + 15vh);
+    z-index: 3;
+  }
+`;
+
+const BoxForm = styled(containerFlex)`
   position: relative;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 3rem;
-  background: ${(props) => props.theme.secondaryBackground};
+  padding: 1rem;
   width: 300px;
   height: 400px;
   border-radius: 0.75rem;
@@ -23,7 +48,7 @@ const BoxForm = styled(container)`
 const InputLogin = styled.input`
   border: none;
   border-radius: 1rem;
-  width: 15.625rem;
+  width: 95%;
   height: 2.5rem;
   padding-left: 1rem;
   background: ${(props) => props.theme.background};
@@ -35,15 +60,12 @@ const InputLogin = styled.input`
   }
 
   @media screen and (max-width: 768px) {
-    width: 10rem;
     height: 1.5rem;
     font-size: 12px;
   }
 `;
 
-const ButtonLogin = styled.button`
-  cursor: pointer;
-  border: none;
+const ButtonLogin = styled(simpleBtn)`
   width: 15.625rem;
   height: 2.5rem;
   border-radius: 0.375rem;
@@ -99,4 +121,5 @@ export {
   ContainerLogin,
   InputLogin,
   ButtonLogin,
+  BoxImage,
 };

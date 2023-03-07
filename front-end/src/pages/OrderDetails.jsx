@@ -4,23 +4,25 @@ import NavBar from '../components/Navbar';
 import api, { requestData } from '../services/requests';
 import OrderTable from '../components/OrderTable';
 import { TEST_ID_CUSTOMER_ORDER_DETAILS } from '../utils/dataTestsIds';
-
-const statusSales = {
-  pendente: 'pendente',
-  emTransito: 'Em Trânsito',
-  preparando: 'Preparando',
-  entregue: 'Entregue',
-};
+import { ContainerOrder, StatusOrderStyle } from '../styles/Orders';
+import { BoxDetailsOrder, TotalPriceDetails } from '../styles/OrderDetails';
 
 const { ORDER_ID, ORDER_DATE, DELIVERY_STATUS, PREPARING_CHECK,
   DELIVERY_CHECK, TOTAL_PRICE, SELLER_NAME, DISPATCH_CHECK,
 } = TEST_ID_CUSTOMER_ORDER_DETAILS;
 
+const statusSales = {
+  pendent: 'Pendente',
+  preparing: 'Preparando',
+  inTransit: 'Em Trânsito',
+  delivered: 'Entregue',
+};
+
 function OrderDetails() {
   const [order, setOrder] = useState(null);
   const [totalPrice, setTotalPrice] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
-  const [statusSale, setStatusSale] = useState(null);
+  const [statusSale, setStatusSale] = useState(statusSales.pendent);
   const { pathname } = useLocation();
   const { id } = useParams();
 
@@ -50,35 +52,46 @@ function OrderDetails() {
     }
   };
 
+  useEffect(() => {
+    if (order && order.status !== statusSales.pendent) {
+      setStatusSale(order.status);
+    }
+  }, [order]);
+
   return (
-    <div>
+    <ContainerOrder>
       <NavBar />
       { order && (
-        <div key={ order.id }>
+        <BoxDetailsOrder key={ order.id }>
 
           <span data-testid={ `${role}${ORDER_ID}` }>
-            { order.id }
+            { `Nº Pedido: ${order.id}` }
           </span>
-          <p data-testid={ `${role}${SELLER_NAME}` }>
-            { order.seller.name }
-          </p>
+          { role === 'customer' ? (
+            <span data-testid={ `${role}${SELLER_NAME}` }>
+              { `Vendedor: ${order.seller.name}` }
+            </span>
+          ) : (
+            <span>
+              { `Cliente: ${order.user.name}` }
+            </span>
+          )}
           <span data-testid={ `${role}${ORDER_DATE}` }>
             { formattedDate }
           </span>
-          <span data-testid={ `${role}${DELIVERY_STATUS}-1` }>
-            { statusSale || order.status }
-          </span>
+          <StatusOrderStyle
+            data-testid={ `${role}${DELIVERY_STATUS}-1` }
+            className={ statusSale === statusSales.inTransit ? 'emTransito' : statusSale }
+          >
+            { statusSale }
+          </StatusOrderStyle>
 
           { role === 'customer' ? (
             <button
               data-testid={ `${role}${DELIVERY_CHECK}` }
               type="button"
-              disabled={
-                !statusSale
-                  ? order.status !== statusSales.emTransito
-                  : statusSale !== statusSales.emTransito
-              }
-              onClick={ () => updateStatusSale('Entregue') }
+              disabled={ statusSale !== statusSales.inTransit }
+              onClick={ () => updateStatusSale(statusSales.delivered) }
             >
               MARCAR COMO ENTREGUE
             </button>
@@ -87,29 +100,28 @@ function OrderDetails() {
               <button
                 data-testid={ `${role}${PREPARING_CHECK}` }
                 type="button"
-                disabled={ order.status !== 'Pendente' }
-                onClick={ () => updateStatusSale('Preparando') }
+                disabled={ statusSale !== statusSales.pendent }
+                onClick={ () => updateStatusSale(statusSales.preparing) }
               >
                 PREPARAR PEDIDO
               </button>
               <button
                 data-testid={ `${role}${DISPATCH_CHECK}` }
                 type="button"
-                disabled={ order.status !== 'Preparando' }
-                onClick={ () => updateStatusSale(statusSales.emTransito) }
+                disabled={ statusSale !== statusSales.preparing }
+                onClick={ () => updateStatusSale(statusSales.inTransit) }
               >
                 SAIU PARA ENTREGA
               </button>
             </div>
           )}
-
-          <OrderTable products={ order.products } />
-          <span data-testid={ `${role}${TOTAL_PRICE}` }>
-            {totalPrice}
-          </span>
-        </div>
+        </BoxDetailsOrder>
       )}
-    </div>
+      { order && <OrderTable products={ order.products } />}
+      <TotalPriceDetails data-testid={ `${role}${TOTAL_PRICE}` }>
+        {totalPrice}
+      </TotalPriceDetails>
+    </ContainerOrder>
   );
 }
 

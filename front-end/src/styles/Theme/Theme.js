@@ -1,7 +1,9 @@
+const varBlack = 'var(--black)';
+
 const lightTheme = {
   background: 'var(--white)',
   secondaryBackground: 'var(--secondary-green)',
-  textColor: 'var(--black)',
+  textColor: varBlack,
   color: 'var(--green)',
   primaryColor: 'var(--secondary-green)',
   secondaryColor: 'var(--blue)',
@@ -11,14 +13,14 @@ const lightTheme = {
 };
 
 const darkTheme = {
-  background: 'var(--dark-blue)',
-  secondaryBackground: 'var(--black)',
+  background: varBlack,
+  secondaryBackground: 'var(--orange)',
   textColor: 'var(--white)',
-  color: 'var(--red)',
-  primaryColor: 'var(--sanguine)',
+  color: 'var(--sanguine)',
+  primaryColor: 'var(--red)',
   secondaryColor: 'var(--sweet-morning)',
   tertiaryColor: 'var(--beige)',
-  quaternaryColor: 'var(--blue)',
+  quaternaryColor: varBlack,
   isDark: true,
 };
 

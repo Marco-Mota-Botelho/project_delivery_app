@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+export const ThemeContainer = styled.div`
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
 export const ThemeButton = styled.button`
   position: relative;
   background: ${(props) => props.theme.secondaryBackground};
@@ -8,6 +20,10 @@ export const ThemeButton = styled.button`
   height: 25px;
   margin: 0 0.75rem;
   border: none;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const SwitchSpan = styled.span`
@@ -33,13 +49,4 @@ export const SwitchSpan = styled.span`
     transition: transform 0.3s ease;
     transform: ${(props) => props.theme.isDark && 'translateX(25px)'};
   }
-`;
-
-export const ThemeContainer = styled.div`
-  position: relative;
-  right: calc(1rem + 2vw);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
 `;

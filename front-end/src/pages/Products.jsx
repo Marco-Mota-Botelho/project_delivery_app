@@ -5,10 +5,17 @@ import Navbar from '../components/Navbar';
 import { getProductsCard } from '../services/cartStorage';
 import { requestData } from '../services/requests';
 import { TEST_ID_PRODUCTS } from '../utils/dataTestsIds';
+import { ContainerProducts, TotalPrice, ButtonCart, Container,
+  SpanCountCartItems } from '../styles/Products';
+import { ShoppingCartIcon } from '../styles/Icons';
+
+const oneSecond = 2000;
 
 function Products() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [countItems, setCountItems] = useState(0);
+  const [isAnimation, setIsAnimation] = useState(false);
   const navigate = useNavigate();
 
   const sumTotalPrice = () => {
@@ -36,6 +43,12 @@ function Products() {
 
   useEffect(() => {
     if (+totalPrice < 0) setTotalPrice(0);
+
+    setCountItems(getProductsCard().length);
+    setIsAnimation(true);
+    setTimeout(() => {
+      setIsAnimation(false);
+    }, oneSecond);
   }, [totalPrice]);
 
   const handleClick = () => {
@@ -43,36 +56,42 @@ function Products() {
   };
 
   return (
-    <div>
-      <Navbar />
-      <section
-        style={
-          { display: 'flex', width: '100%', flexWrap: 'wrap', margin: '20px' }
-        }
-      >
-        { products.length > 0 && products.map((product) => (
+    <Container>
+
+      <Navbar>
+
+        <div>
+          <TotalPrice
+            data-testid={ TEST_ID_PRODUCTS.BOTTOM_VALUE }
+            animations={ isAnimation.toString() }
+          >
+            { totalPrice }
+          </TotalPrice>
+          <ButtonCart
+            type="button"
+            data-testid={ TEST_ID_PRODUCTS.BUTTON_CART }
+            onClick={ handleClick }
+            disabled={ totalPrice === 0 }
+          >
+            <ShoppingCartIcon animations={ isAnimation.toString() } />
+            <SpanCountCartItems>
+              { countItems }
+            </SpanCountCartItems>
+          </ButtonCart>
+        </div>
+
+      </Navbar>
+
+      <ContainerProducts>
+        { products && products.map((product) => (
           <CardProduct
             product={ product }
             key={ product.id }
             sumTotalPrice={ sumTotalPrice }
           />
         ))}
-      </section>
-      <button
-        type="button"
-        data-testid={ TEST_ID_PRODUCTS.BUTTON_CART }
-        onClick={ handleClick }
-        disabled={ totalPrice === 0 }
-      >
-        Ver Carrinho
-        <span
-          data-testid={ TEST_ID_PRODUCTS.BOTTOM_VALUE }
-          style={ { padding: '10px' } }
-        >
-          { totalPrice }
-        </span>
-      </button>
-    </div>
+      </ContainerProducts>
+    </Container>
   );
 }
 

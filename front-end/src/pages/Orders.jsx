@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import CardOrder from '../components/CardOrder';
 import NavBar from '../components/Navbar';
 import { requestData } from '../services/requests';
+import { BoxOrders, ContainerOrder } from '../styles/Orders';
 
 function Orders() {
   const [sales, setSales] = useState(null);
@@ -16,13 +17,17 @@ function Orders() {
     fetchSales();
   }, []);
   return (
-    <div>
+    <ContainerOrder>
       <NavBar />
-      { sales?.map((sale) => (<CardOrder
-        sale={ sale }
-        key={ sale.id }
-      />))}
-    </div>
+      <BoxOrders>
+        { sales?.map((sale) => (
+          <CardOrder
+            sale={ sale }
+            key={ sale.id }
+          />
+        ))}
+      </BoxOrders>
+    </ContainerOrder>
   );
 }
 

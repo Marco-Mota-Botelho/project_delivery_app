@@ -4,13 +4,13 @@ const GlobalStyled = createGlobalStyle`
 :root {
   --white: #fefefe;
   --black: #131212;
-  --blue: #056CF9;
+  --blue: #0f0c25;
   --purple: #421981;
   --green: #036B52;
   --secondary-green: #2FC18C;
-  --dark-blue: #0f0c25;
+  --orange: #9E311D;
   --red: #C5211C;
-  --sanguine: #e4443f;
+  --sanguine: #C5321a;
   --sweet-morning: #f59b65;
   --beige: #F7BA79;
   --yellow: #e0e05a;

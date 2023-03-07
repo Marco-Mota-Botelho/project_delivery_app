@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TEST_ID_CUSTOMER_ORDER } from '../utils/dataTestsIds';
 import { getUser } from '../services/userStorage';
+import { CardOrderStyle, SaleIdStyle, StatusOrderStyle } from '../styles/Orders';
 
 const { ORDER_ID, DELIVERY_STATUS, ORDER_DATE, PRICE } = TEST_ID_CUSTOMER_ORDER;
 
@@ -16,36 +17,26 @@ function CardOrder({ sale }) {
     setRole(getUser());
   }, []);
 
-  console.log(sale);
-
   return (
-    <div>
-      <Link to={ `/${user.role}/orders/${sale.id}` }>
-        <section>
-          <h1>
-            Pedido:
-            <span data-testid={ `${user.role}${ORDER_ID}${sale.id}` }>
-              {sale.id}
-            </span>
-          </h1>
-        </section>
-        <section>
-          <h1 data-testid={ `${user.role}${DELIVERY_STATUS}${sale.id}` }>
-            {sale.status}
-          </h1>
-        </section>
-        <section>
-          <h1 data-testid={ `${user.role}${ORDER_DATE}${sale.id}` }>
-            {finalDate}
-          </h1>
-        </section>
-        <section>
-          <h1 data-testid={ `${user.role}${PRICE}${sale.id}` }>
-            {finalPrice}
-          </h1>
-        </section>
-      </Link>
-    </div>
+    <Link to={ `/${user.role}/orders/${sale.id}` }>
+      <CardOrderStyle>
+        <SaleIdStyle data-testid={ `${user.role}${ORDER_ID}${sale.id}` }>
+          {sale.id}
+        </SaleIdStyle>
+        <StatusOrderStyle
+          data-testid={ `${user.role}${DELIVERY_STATUS}${sale.id}` }
+          className={ sale.status === 'Em Trânsito' ? 'emTransito' : sale.status }
+        >
+          {sale.status}
+        </StatusOrderStyle>
+        <span data-testid={ `${user.role}${ORDER_DATE}${sale.id}` }>
+          {finalDate}
+        </span>
+        <span data-testid={ `${user.role}${PRICE}${sale.id}` }>
+          {finalPrice}
+        </span>
+      </CardOrderStyle>
+    </Link>
   );
 }
 
