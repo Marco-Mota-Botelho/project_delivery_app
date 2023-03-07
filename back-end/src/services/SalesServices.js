@@ -14,7 +14,8 @@ const getSalesBySaleId = async (saleId) => {
   const result = await Sale.findByPk(saleId, {
     include: [
       { model: Product, as: 'products' },
-      { model: User, as: 'seller', attributes: { exclude: ['password', 'role', 'email'] } },
+      { model: User, as: 'seller', attributes: ['name'] },
+      { model: User, as: 'user', attributes: ['name'] },
     ],
   });
   if (!result) return { status: 404, message: 'No Found' };
