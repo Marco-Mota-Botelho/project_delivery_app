@@ -4,7 +4,7 @@ import { requestLogin } from '../services/requests';
 import ROLE_PATH from '../utils/rolePaths';
 import { setUser } from '../services/userStorage';
 import { ContainerLogin, BoxForm, InputLogin, ButtonLogin,
-  TitleBoxLogin, SpanErrorLogin } from '../styles/Login';
+  TitleBoxLogin, SpanErrorLogin, BoxImage } from '../styles/Login';
 import Header from '../components/Header';
 
 const MIN_PASSWORD_LENGTH = 6;
@@ -28,6 +28,7 @@ function Login() {
     const { email, password } = state;
     try {
       const response = await requestLogin('/login', { email, password });
+      console.log(response);
       setUser({
         name: response.name,
         email: response.email,
@@ -51,6 +52,8 @@ function Login() {
   return (
     <ContainerLogin>
       <Header />
+
+      <BoxImage />
 
       <BoxForm>
 
