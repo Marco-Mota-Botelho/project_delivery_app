@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { requestLogin } from '../services/requests';
+import { setUser } from '../services/userStorage';
 import ROLE_PATH from '../utils/rolePaths';
 
 const MIN_PASSWORD_LENGTH = 6;
@@ -8,13 +9,13 @@ const MIN_NAME_LENGTH = 12;
 
 function Login() {
   const navigate = useNavigate();
-  const [state, setState] = useState({ email: '', password: '', userName: '' });
+  const [state, setState] = useState({ email: '', password: '', name: '' });
   const [errorMessage, setErrorMessage] = useState('');
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
     return !(checkEmail && state.password.length >= MIN_PASSWORD_LENGTH
-       && state.userName.length >= MIN_NAME_LENGTH);
+       && state.name.length >= MIN_NAME_LENGTH);
   };
 
   const onInputChange = ({ target: { name, value } }) => {
@@ -22,9 +23,10 @@ function Login() {
   };
 
   const handleClick = async () => {
-    const { userName, email, password } = state;
+    const { name, email, password } = state;
     try {
-      await requestLogin('/register', { name: userName, email, password });
+      const newUser = await requestLogin('/register', { name, email, password });
+      setUser(newUser);
       navigate(`/${ROLE_PATH.customer}`);
     } catch (error) {
       setErrorMessage(error.request.statusText);
@@ -39,12 +41,12 @@ function Login() {
   return (
     <div>
       <input
-        type="userName"
+        type="text"
         data-testid="common_register__input-name"
-        name="userName"
+        name="name"
         placeholder="Digite seu nome"
         onChange={ onInputChange }
-        value={ state.userName }
+        value={ state.name }
       />
       <input
         type="email"
