@@ -15,12 +15,12 @@ const lightTheme = {
 const darkTheme = {
   background: varBlack,
   secondaryBackground: 'var(--orange)',
-  textColor: 'var(--white)',
+  textColor: 'var(--light-blue)',
   color: 'var(--sanguine)',
   primaryColor: 'var(--red)',
   secondaryColor: 'var(--sweet-morning)',
   tertiaryColor: 'var(--beige)',
-  quaternaryColor: varBlack,
+  quaternaryColor: 'var(--blue)',
   isDark: true,
 };
 

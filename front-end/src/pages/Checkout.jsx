@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { requestLogin, setToken } from '../services/requests';
 import { getProductsCard, removeCart, removeProduct } from '../services/cartStorage';
+import { BoxFormCheckout, ContainerCheckout } from '../styles/Checkout';
+import TableStyle from '../styles/Table/TableStyles';
 
 function Checkout() {
   const navigate = useNavigate();
@@ -47,6 +49,7 @@ function Checkout() {
     navigate(`/customer/orders/${result.id}`);
     removeCart();
   };
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     setToken(user.token);
@@ -55,17 +58,18 @@ function Checkout() {
   }, []);
 
   return (
-    <div>
+    <ContainerCheckout>
       <Navbar />
-      <h3>Checkout</h3>
-      <table>
+      <TableStyle>
+        <p>Finalizar Pedido</p>
         <tbody>
           <tr>
             <th>Item</th>
             <th>Descrição</th>
-            <th>Quant...</th>
-            <th>Valor Un...</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
             <th>Sub-total</th>
+            <th>Remover Item</th>
           </tr>
           {products.map((product, i) => (
             <tr key={ product.id }>
@@ -107,14 +111,13 @@ function Checkout() {
             </tr>
           ))}
         </tbody>
-      </table>
-      <span
-        data-testid="customer_checkout__element-order-total-price"
-        style={ { padding: '10px' } }
-      >
-        { totalPrice }
-      </span>
-      <form action="">
+        <span
+          data-testid="customer_checkout__element-order-total-price"
+        >
+          { totalPrice }
+        </span>
+      </TableStyle>
+      <BoxFormCheckout action="">
         <select
           data-testid="customer_checkout__select-seller"
           name="seller"
@@ -149,8 +152,8 @@ function Checkout() {
         >
           Enviar
         </button>
-      </form>
-    </div>
+      </BoxFormCheckout>
+    </ContainerCheckout>
   );
 }
 

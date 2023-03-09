@@ -72,7 +72,7 @@ const ButtonLogin = styled(simpleBtn)`
   background: ${(props) => props.theme.color};
   font-size: 0.875rem;
   font-weight: 500;
-  opacity: 0.8;
+  opacity: 0.97;
 
   &.first {
     margin-top: 0.75rem;
@@ -102,12 +102,10 @@ const TitleBoxLogin = styled.h1`
 
 const SpanErrorLogin = styled.span`
   position: absolute;
-  bottom: 50px;
-  font-weight: bold;
-  left: auto;
-  font-size: 18px;
-  text-transform: capitalize;
-  color: ${(props) => props.theme.textColor};
+  bottom: 10px;
+  font-weight: 500;
+  color: red;
+  text-align: center;
 
   @media screen and (max-width: 768px) {
     font-size: 10px;

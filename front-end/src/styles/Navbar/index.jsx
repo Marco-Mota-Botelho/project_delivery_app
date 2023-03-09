@@ -46,6 +46,7 @@ const NavbarStyles = styled.div`
 const NameUser = styled.span`
   font-size: 20px;
   margin-right: 20px;
+  cursor: default;
   :before {
     content: 'Olá, ';
   }
@@ -62,6 +63,7 @@ const BtnLogout = styled(simpleBtn)`
   align-items: center;
   gap: 15px;
   margin-left: 15px;
+  cursor: pointer;
 
   :before {
     content: 'Sair '

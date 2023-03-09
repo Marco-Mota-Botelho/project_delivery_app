@@ -34,8 +34,8 @@ const CardOrderStyle = styled.div`
   width: 80vw;
   height: calc(1rem + 10vh);
   padding: 1rem calc(0.5rem + 4vw);
-  color: ${(props) => props.theme.textColor};
-  background: ${(props) => props.theme.background};
+  color: ${(props) => props.theme.background};
+  background: ${(props) => props.theme.color};
   border: solid 2px ${(props) => props.theme.secondaryBackground};
   gap: 2rem;
   border-radius: 2rem;
@@ -58,11 +58,10 @@ const StatusOrderStyle = styled.span`
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  height: 100%;
+  height: 70%;
   width: 20%;
   color: #000;
-  opacity: 0.9;
-  
+
   &.Pendente {
     background: #C5211C;
   }
@@ -77,10 +76,6 @@ const StatusOrderStyle = styled.span`
 
   &.Entregue {
     background: #34c747;
-  }
-
-  :hover {
-    opacity: 1;
   }
 `;
 

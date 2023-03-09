@@ -3,17 +3,18 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyled = createGlobalStyle`
 :root {
   --white: #fefefe;
-  --black: #131212;
-  --blue: #0f0c25;
+  --black: #03001C;
+  --blue: #1597BB;
   --purple: #421981;
   --green: #036B52;
   --secondary-green: #2FC18C;
-  --orange: #9E311D;
-  --red: #C5211C;
-  --sanguine: #C5321a;
+  --orange: #301E67;
+  --red: #1597BB;
+  --sanguine: #5B8FB9;
   --sweet-morning: #f59b65;
   --beige: #F7BA79;
   --yellow: #e0e05a;
+  --light-blue: #B6EADA;
 }
 
 /*

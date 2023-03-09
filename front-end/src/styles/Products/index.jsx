@@ -110,6 +110,7 @@ const TotalPrice = styled.span`
   transform: ${(props) => props.animations === 'true' && 'scale(1.5)'};
   margin-right: ${(props) => (props.animations === 'true' ? '50px' : '10px')};
   font-size: 20px;
+  cursor: default;
   :before {
     content: 'Preço Total: '
   }
@@ -131,9 +132,9 @@ const ButtonCart = styled.button`
 const SpanCountCartItems = styled.span`
   position: absolute;
   top: -0.7rem;
-  right: -1rem;
+  right: -1.3rem;
   border-radius: 50%;
-  padding: 0.1rem 0.4rem 0;
+  padding: 0.1rem 0.5rem 0;
   background-color: ${(props) => props.theme.quaternaryColor};
   color: ${(props) => props.theme.textColor};
 `;
