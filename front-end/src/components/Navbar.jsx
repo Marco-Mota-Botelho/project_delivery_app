@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { getUser, logOutUser } from '../services/userStorage';
 import { LogoutIcon } from '../styles/Icons';
 import { NavbarStyles, NameUser, BtnLogout } from '../styles/Navbar';
@@ -9,6 +9,10 @@ import SwitchTheme from './SwithTheme';
 function NavBar({ children }) {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const isAdm = pathname.includes('admin');
+  const role = pathname.includes('customer') ? 'customer' : 'seller';
 
   useEffect(() => {
     setUser(getUser());
@@ -22,25 +26,31 @@ function NavBar({ children }) {
   return (
     <NavbarStyles>
 
-      <NameUser data-testid="customer_products__element-navbar-user-full-name">
+      <NameUser isAdm data-testid="customer_products__element-navbar-user-full-name">
         { user.name }
       </NameUser>
 
-      <div>
-        <NavLink
-          data-testid="customer_products__element-navbar-link-products"
-          to="/customer/products"
-        >
-          Produtos
-        </NavLink>
+      { isAdm && <span>Gerenciar Usuários</span> }
 
-        <NavLink
-          data-testid="customer_products__element-navbar-link-orders"
-          to={ `/${user.role}/orders` }
-        >
-          Pedidos
-        </NavLink>
-      </div>
+      { !isAdm && (
+        <div>
+          { role === 'customer' && (
+            <NavLink
+              data-testid="customer_products__element-navbar-link-products"
+              to="/customer/products"
+            >
+              Produtos
+            </NavLink>
+          )}
+
+          <NavLink
+            data-testid="customer_products__element-navbar-link-orders"
+            to={ `/${user.role}/orders` }
+          >
+            Pedidos
+          </NavLink>
+        </div>
+      )}
 
       { children }
 

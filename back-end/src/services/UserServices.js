@@ -1,40 +1,29 @@
 const md5 = require('md5');
-const { createToken } = require('../auth/jsonWebToken');
 const { User } = require('../database/models');
 const HttpStatusCode = require('../utils/HttpStatusCode');
-
-const login = async ({ email, password }) => {
-  const data = await User.findOne({ where: { email } });
-  
-  if (!data) return { status: HttpStatusCode.NOT_FOUND, message: 'Not found' };
-
-  const codedPassword = md5(password);
-
-  const result = data.dataValues;
-
-  const token = createToken({ name: result.name, email: result.email, role: result.role });
-
-  if (codedPassword !== data.password) {
-    return { status: HttpStatusCode.UNAUTHORIZED, message: 'Invalid password' };
-  }
-
-  return { status: HttpStatusCode.OK, result, token };
-};
 
 const register = async ({ name, email, password }) => {
   const codedPassword = md5(password);
   const findUser = await User.findOne({ where: { email } });
-  if (findUser) return { status: HttpStatusCode.CONFLICT };
-  const result = await User.create({ name, email, password: codedPassword });
-  return { status: HttpStatusCode.CREATED, result };
+  if (findUser) return { message: 'User already registered' ,status: HttpStatusCode.CONFLICT };
+  const user = await User.create({ name, email, password: codedPassword });
+  const { password: _, ...userWithoutPassword } = user.dataValues;
+  return { status: HttpStatusCode.CREATED, result: userWithoutPassword };
 };
 
 const admRegister = async ({ name, email, password, role }) => {
   const codedPassword = md5(password);
   const findUser = await User.findOne({ where: { email } });
-  if (findUser) return { status: HttpStatusCode.CONFLICT };
-  const result = await User.create({ name, email, password: codedPassword, role });
-  return { status: HttpStatusCode.CREATED, result };
+  if (findUser) return { message: 'User already registered',status: HttpStatusCode.CONFLICT };
+  const user = await User.create({ name, email, password: codedPassword, role });
+  const { password: _, ...userWithoutPassword } = user.dataValues;
+  return { status: HttpStatusCode.CREATED, result: userWithoutPassword };
 };
 
-module.exports = { login, register, admRegister };
+const getAllUsers = async () => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  if (!users) return { message: 'User does not exist', status: HttpStatusCode.NOT_FOUND };
+  return { result: users, status: HttpStatusCode.OK };
+}
+
+module.exports = { register, admRegister, getAllUsers };

@@ -2,10 +2,10 @@ const { Router } = require('express');
 const UsersController = require('../controllers/UsersController');
 
 const usersRoutes = Router();
-const registerRoutes = Router();
 
-usersRoutes.post('/', UsersController.login);
-registerRoutes.post('/', UsersController.register);
-registerRoutes.post('/manage', UsersController.admRegister);
+usersRoutes.post('/register', UsersController.register);
+usersRoutes.post('/register/manage', UsersController.admRegister);
+usersRoutes.get('/', UsersController.getAllUsers);
 
-module.exports = { usersRoutes, registerRoutes };
+
+module.exports = usersRoutes;

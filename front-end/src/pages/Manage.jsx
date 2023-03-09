@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { requestLogin, setToken } from '../services/requests';
 import { TEST_ID_MANAGE } from '../utils/dataTestsIds';
 import Navbar from '../components/Navbar';
-// import ROLE_PATH from '../utils/rolePaths';
+import { BoxForm, ContainerManage, TitleForm } from '../styles/Manage.';
 
 const {
   INPUT_NAME,
@@ -17,8 +16,7 @@ const {
 const MIN_PASSWORD_LENGTH = 6;
 const MIN_NAME_LENGTH = 12;
 
-function Login() {
-  // const navigate = useNavigate();
+function Manage() {
   const [state, setState] = useState({ email: '', password: '', userName: '', role: '' });
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -38,10 +36,9 @@ function Login() {
     setToken(user.token);
     try {
       const response = await
-      requestLogin('/register/manage', { name: userName, email, password, role });
+      requestLogin('/users/register/manage', { name: userName, email, password, role });
       console.log(response);
       setState({ email: '', password: '', userName: '', role: '' });
-      // navigate(`/${ROLE_PATH.customer}`);
     } catch (error) {
       setErrorMessage(error.request.statusText);
       console.error(error);
@@ -53,56 +50,75 @@ function Login() {
   }, [state]);
 
   return (
-    <div>
+    <ContainerManage>
       <Navbar />
-      <input
-        type="userName"
-        data-testid={ INPUT_NAME }
-        name="userName"
-        placeholder="Nome e sobrenome"
-        onChange={ onInputChange }
-        value={ state.userName }
-      />
-      <input
-        type="email"
-        data-testid={ INPUT_EMAIL }
-        name="email"
-        placeholder="email"
-        onChange={ onInputChange }
-        value={ state.email }
-      />
-      <input
-        type="text"
-        data-testid={ INPUT_PASSWORD }
-        name="password"
-        placeholder="Digite sua senha"
-        onChange={ onInputChange }
-        value={ state.password }
-      />
-      <select
-        data-testid={ MANAGE_SELECT_ROLE }
-        name="role"
-        onChange={ onInputChange }
-        value={ state.role }
-      >
-        <option value="customer">Consumidor</option>
-        <option value="seller">Vendedor</option>
-        <option value="administrator">Administrador</option>
-      </select>
-      <button
-        type="button"
-        data-testid={ MANAGE_REGISTER_BUTTON }
-        disabled={ validateLogin() }
-        onClick={ handleClick }
-      >
-        Cadastrar
-      </button>
-      <span data-testid={ MANAGE_INVALID_MESSAGE }>
-        { errorMessage }
-      </span>
+      <BoxForm>
+        <TitleForm>Gerenciar novo usuário</TitleForm>
+        <label htmlFor="userName">
+          Nome
+          <input
+            type="userName"
+            data-testid={ INPUT_NAME }
+            id="userName"
+            name="userName"
+            placeholder="Nome e sobrenome"
+            onChange={ onInputChange }
+            value={ state.userName }
+          />
+        </label>
+        <label htmlFor="userEmail">
+          Email
+          <input
+            type="email"
+            data-testid={ INPUT_EMAIL }
+            name="email"
+            id="userEmail"
+            placeholder="email"
+            onChange={ onInputChange }
+            value={ state.email }
+          />
+        </label>
+        <label htmlFor="userPassword">
+          Senha
+          <input
+            type="text"
+            data-testid={ INPUT_PASSWORD }
+            name="password"
+            id="userPassword"
+            placeholder="Digite sua senha"
+            onChange={ onInputChange }
+            value={ state.password }
+          />
+        </label>
+        <label htmlFor="userRole">
+          Role
+          <select
+            data-testid={ MANAGE_SELECT_ROLE }
+            name="role"
+            id="userRole"
+            onChange={ onInputChange }
+            value={ state.role }
+          >
+            <option value="customer">Consumidor</option>
+            <option value="seller">Vendedor</option>
+            <option value="administrator">Administrador</option>
+          </select>
+        </label>
+        <button
+          type="button"
+          data-testid={ MANAGE_REGISTER_BUTTON }
+          disabled={ validateLogin() }
+          onClick={ handleClick }
+        >
+          Cadastrar
+        </button>
+        <span data-testid={ MANAGE_INVALID_MESSAGE }>
+          { errorMessage }
+        </span>
+      </BoxForm>
 
-    </div>
+    </ContainerManage>
   );
 }
 
-export default Login;
+export default Manage;

@@ -44,7 +44,7 @@ function Login() {
       return;
     }
     try {
-      const newUser = await requestLogin('/register', { name, email, password });
+      const newUser = await requestLogin('/users/register', { name, email, password });
       setUser(newUser);
       navigate(`/${ROLE_PATH.customer}`);
     } catch (error) {
