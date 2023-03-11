@@ -25,10 +25,23 @@ const admRegister = async (req, res) => {
   return res.status(status).json(result);
 };
 
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const result = await UserServices.deleteUser(id);
+  if (result === false) return res.status(401).json({ message: 'No such user' });
+  if (result === true) return res.status(204).json();
+};
+
 const getAllUsers = async (_req, res) => {
   const { status, result, message } = await UserServices.getAllUsers();
   if (message) return res.status(status).json({ message });
   return res.status(status).json(result);
+};
+
+const getAllSellers = async (_req, res) => {
+  const { status, result, message } = await UserServices.getAllSellers();
+  if (message) return res.status(status).json({ message });
+  return res.status(status).json(result);
 }
 
-module.exports = { register, admRegister, getAllUsers };
+module.exports = { register, admRegister, getAllUsers, deleteUser, getAllSellers };

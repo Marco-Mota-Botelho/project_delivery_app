@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import NavBar from '../components/Navbar';
 import api, { requestData } from '../services/requests';
 import OrderTable from '../components/OrderTable';
 import { TEST_ID_CUSTOMER_ORDER_DETAILS } from '../utils/dataTestsIds';
 import { ContainerOrder, StatusOrderStyle } from '../styles/Orders';
 import { BoxDetailsOrder, TotalPriceDetails } from '../styles/OrderDetails';
+import { getUser } from '../services/userStorage';
 
 const { ORDER_ID, ORDER_DATE, DELIVERY_STATUS, PREPARING_CHECK,
   DELIVERY_CHECK, TOTAL_PRICE, SELLER_NAME, DISPATCH_CHECK,
@@ -18,17 +19,33 @@ const statusSales = {
   delivered: 'Entregue',
 };
 
+const rolePermissions = ['customer', 'seller'];
+
 function OrderDetails() {
   const [order, setOrder] = useState(null);
   const [totalPrice, setTotalPrice] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
   const [statusSale, setStatusSale] = useState(statusSales.pendent);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const role = pathname.includes('customer') ? 'customer' : 'seller';
 
+  const updateStatusSale = async (SaleStatus) => {
+    try {
+      await api.put(`/sales/seller/updateStatus/${id}`, { SaleStatus });
+      setStatusSale(SaleStatus);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    const user = getUser();
+    if (!rolePermissions.includes(user.role) || role !== user.role) {
+      return navigate('/401');
+    }
     const fetchOrders = async () => {
       try {
         const data = await requestData(`sales/saleId/${id}`);
@@ -41,22 +58,8 @@ function OrderDetails() {
       }
     };
     fetchOrders();
-  }, [id, role]);
-
-  const updateStatusSale = async (SaleStatus) => {
-    try {
-      await api.put(`/sales/seller/updateStatus/${id}`, { SaleStatus });
-      setStatusSale(SaleStatus);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (order && order.status !== statusSales.pendent) {
-      setStatusSale(order.status);
-    }
-  }, [order]);
+    if (order && order.status !== statusSales.pendent) setStatusSale(order.status);
+  }, [id, role, navigate, order]);
 
   return (
     <ContainerOrder>

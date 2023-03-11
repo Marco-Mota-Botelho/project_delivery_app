@@ -42,7 +42,8 @@ const BoxForm = styled(containerFlex)`
   width: 300px;
   height: 400px;
   border-radius: 0.75rem;
-  box-shadow:  0.125rem 0.125rem 0.125rem 0.125rem #0000002f;
+  box-shadow:  0.135rem 0.135rem 0.135rem 0.135rem #504f4f2d;
+  border: solid 1px #e44023ac;
 `;
 
 const InputLogin = styled.input`
@@ -104,7 +105,7 @@ const SpanErrorLogin = styled.span`
   position: absolute;
   bottom: 10px;
   font-weight: 500;
-  color: red;
+  color: #E43F23;
   text-align: center;
 
   @media screen and (max-width: 768px) {

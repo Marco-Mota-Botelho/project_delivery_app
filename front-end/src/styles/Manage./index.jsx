@@ -3,15 +3,19 @@ import containerFlex from '../container';
 
 const ContainerManage = styled(containerFlex)`
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   width: 100%;
   background: ${(props) => props.theme.background};
+  gap: 50px;
+  padding-bottom: 5rem;
 `;
 
 const BoxForm = styled.form`
   position: relative;
   display: flex;
   align-items: center;
+  margin-top: 150px;
   gap: 1rem;
   height: 20vh;
   width: 90%;

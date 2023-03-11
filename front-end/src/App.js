@@ -10,6 +10,8 @@ import Manage from './pages/Manage';
 import ThemeContext from './context/ThemeContext';
 import { lightTheme, darkTheme } from './styles/Theme/Theme';
 import OrderDetails from './pages/OrderDetails';
+import NotFound from './pages/NotFound';
+import UnauthorizedPage from './pages/UnauthorizedPage';
 
 function App() {
   const { isDark } = useContext(ThemeContext);
@@ -26,6 +28,8 @@ function App() {
         <Route exact path="/seller/orders" element={ <Orders /> } />
         <Route exact path="/seller/orders/:id" element={ <OrderDetails /> } />
         <Route exact path="/admin/manage" element={ <Manage /> } />
+        <Route exact path="/401" element={ <UnauthorizedPage /> } />
+        <Route path="/*" element={ <NotFound /> } />
       </Routes>
     </ThemeProvider>
   );

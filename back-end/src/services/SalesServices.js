@@ -33,7 +33,6 @@ const getBySellerId = async (id) => {
 };
 
 const updateStatusSale = async (SaleStatus, saleId) => {
-  console.log(SaleStatus, saleId);
   const result = await Sale.update({ status: SaleStatus }, { where: { id: saleId } });
   if (!result) return { status: 404, message: 'Not Found' };
 

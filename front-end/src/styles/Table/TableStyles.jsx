@@ -1,7 +1,7 @@
 import Styled from 'styled-components';
 
 const TableStyle = Styled.table`
-  margin-top: 150px;
+  margin-top: ${(props) => (props.isMenage === 'true' ? '0' : '150px')};
   background: ${(props) => props.theme.secondaryBackground};
   color: ${(props) => props.theme.textColor};
   width: 80vw;

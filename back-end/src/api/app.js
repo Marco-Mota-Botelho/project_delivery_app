@@ -13,7 +13,7 @@ app.use(cors());
 app.use(ErrorHandler.handler);
 
 app.use('/login', loginRoutes);
-app.use('/users', usersRoutes);
+app.use('/user', usersRoutes);
 app.use('/products', productsRoutes);
 app.use('/sales', salesRoutes);
 

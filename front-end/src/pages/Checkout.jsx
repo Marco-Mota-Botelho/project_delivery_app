@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { requestLogin, setToken } from '../services/requests';
+import { requestLogin, setToken, requestData } from '../services/requests';
 import { getProductsCard, removeCart, removeProduct } from '../services/cartStorage';
 import { BoxFormCheckout, ContainerCheckout } from '../styles/Checkout';
 import TableStyle from '../styles/Table/TableStyles';
+import { getUser } from '../services/userStorage';
 
 function Checkout() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [state, setState] = useState({ address: '', addressNumber: '', seller: 1 });
+  const [state, setState] = useState({ address: '', addressNumber: '', seller: 0 });
   const [totalPrice, setTotalPrice] = useState(0);
+  const [sellers, setSellers] = useState(null);
 
   const onInputChange = ({ target: { name, value } }) => {
     setState({ ...state, [name]: value });
@@ -51,11 +53,20 @@ function Checkout() {
   };
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = getUser();
+    if (user.role !== 'customer') return navigate('/401');
     setToken(user.token);
     setProducts(getProductsCard());
     sumTotalPrice();
-  }, []);
+
+    const fetchSeller = async () => {
+      const response = await requestData('/user/seller');
+      setSellers(response);
+      setState((prev) => ({ ...prev, seller: response[0].id }));
+    };
+
+    fetchSeller();
+  }, [navigate]);
 
   return (
     <ContainerCheckout>
@@ -70,6 +81,7 @@ function Checkout() {
             <th>Valor Unitário</th>
             <th>Sub-total</th>
             <th>Remover Item</th>
+
           </tr>
           {products.map((product, i) => (
             <tr key={ product.id }>
@@ -124,9 +136,17 @@ function Checkout() {
           onChange={ onInputChange }
           value={ state.seller }
         >
-          <option value={ 1 }>Vendedor Vinicius</option>
-          <option value={ 2 }>Vendedor Furtado</option>
-          <option value={ 3 }>Vendedor Botelho</option>
+
+          { sellers && (
+            sellers.map((seller) => (
+              <option
+                key={ `seller-id-${seller.id}` }
+                value={ seller.id }
+              >
+                { seller.name }
+              </option>
+            ))
+          )}
         </select>
         <input
           type="text"

@@ -4,21 +4,20 @@ const HttpStatusCode = require('../utils/HttpStatusCode');
 const { User } = require('../database/models');
 
 const login = async ({ email, password }) => {
-  const data = await User.findOne({ where: { email } });
+  const result = await User.findOne({ where: { email } });
   
-  if (!data) return { status: HttpStatusCode.NOT_FOUND, message: 'Not found' };
+  if (!result) return { status: HttpStatusCode.NOT_FOUND, message: 'Not found' };
 
   const codedPassword = md5(password);
 
-  const result = data.dataValues;
 
   const token = createToken({ name: result.name, email: result.email, role: result.role });
 
-  if (codedPassword !== data.password) {
+  if (codedPassword !== result.password) {
     return { status: HttpStatusCode.UNAUTHORIZED, message: 'Invalid password' };
   }
-
-  return { status: HttpStatusCode.OK, result, token };
+  const { password: _, ...userWithoutPassword } = result.dataValues;
+  return { status: HttpStatusCode.OK, result: { ...userWithoutPassword, token } };
 };
 
 module.exports = { login };

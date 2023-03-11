@@ -8,6 +8,7 @@ import { TEST_ID_PRODUCTS } from '../utils/dataTestsIds';
 import { ContainerProducts, TotalPrice, ButtonCart, Container,
   SpanCountCartItems } from '../styles/Products';
 import { ShoppingCartIcon } from '../styles/Icons';
+import { getUser } from '../services/userStorage';
 
 const oneSecond = 2000;
 
@@ -29,6 +30,8 @@ function Products() {
   };
 
   useEffect(() => {
+    const user = getUser();
+    if (user.role !== 'customer') return navigate('/401');
     const fetchProducts = async () => {
       try {
         const data = await requestData('/products');
@@ -39,7 +42,7 @@ function Products() {
     };
     sumTotalPrice();
     fetchProducts();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (+totalPrice < 0) setTotalPrice(0);

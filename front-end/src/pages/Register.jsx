@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { requestLogin } from '../services/requests';
-import { setUser } from '../services/userStorage';
 import { BoxForm, ButtonLogin, ContainerLogin, InputLogin,
   SpanErrorLogin, TitleBoxLogin } from '../styles/Login';
 import ROLE_PATH from '../utils/rolePaths';
+import { setUser } from '../services/userStorage';
 
 const MIN_PASSWORD_LENGTH = 6;
 const MIN_NAME_LENGTH = 12;
@@ -44,8 +44,8 @@ function Login() {
       return;
     }
     try {
-      const newUser = await requestLogin('/users/register', { name, email, password });
-      setUser(newUser);
+      const user = await requestLogin('/user/register', { name, email, password });
+      setUser(user);
       navigate(`/${ROLE_PATH.customer}`);
     } catch (error) {
       handleError(error.request.statusText);

@@ -27,16 +27,9 @@ function Login() {
   const handleClick = async () => {
     const { email, password } = state;
     try {
-      const response = await requestLogin('/login', { email, password });
-      console.log(response);
-      setUser({
-        name: response.name,
-        email: response.email,
-        role: response.role,
-        token: response.token,
-        id: response.id,
-      });
-      navigate(`/${ROLE_PATH[response.role]}`);
+      const result = await requestLogin('/login', { email, password });
+      setUser(result);
+      navigate(`/${ROLE_PATH[result.role]}`);
     } catch (error) {
       setErrorMessage('Email inválido');
       console.error(error);
