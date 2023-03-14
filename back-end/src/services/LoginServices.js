@@ -10,7 +10,6 @@ const login = async ({ email, password }) => {
 
   const codedPassword = md5(password);
 
-
   const token = createToken({ name: result.name, email: result.email, role: result.role });
 
   if (codedPassword !== result.password) {

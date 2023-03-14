@@ -42,6 +42,6 @@ const getAllSellers = async (_req, res) => {
   const { status, result, message } = await UserServices.getAllSellers();
   if (message) return res.status(status).json({ message });
   return res.status(status).json(result);
-}
+};
 
 module.exports = { register, admRegister, getAllUsers, deleteUser, getAllSellers };
