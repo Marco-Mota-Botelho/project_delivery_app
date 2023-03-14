@@ -4,16 +4,26 @@ import { requestLogin } from '../services/requests';
 import ROLE_PATH from '../utils/rolePaths';
 import { setUser } from '../services/userStorage';
 import { ContainerLogin, BoxForm, InputLogin, ButtonLogin,
-  TitleBoxLogin, SpanErrorLogin, BoxImage } from '../styles/Login';
+  TitleBoxLogin, SpanErrorLogin, BoxImage, BoxPassword } from '../styles/Login';
 import Header from '../components/Header';
+import { ClosedEyeIcon, OpenEyeIcon } from '../styles/Icons';
 
 const MIN_PASSWORD_LENGTH = 6;
+const twoSeconds = 2000;
 
 function Login() {
   const [state, setState] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState('');
+  const [isShowPassword, setIsShowPassword] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
+
+  const handleError = (message) => {
+    setErrorMessage(message);
+    setTimeout(() => {
+      setErrorMessage('');
+    }, [twoSeconds]);
+  };
 
   const validateLogin = () => {
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
@@ -31,13 +41,12 @@ function Login() {
       setUser(result);
       navigate(`/${ROLE_PATH[result.role]}`);
     } catch (error) {
-      setErrorMessage('Email inválido');
+      handleError('Email ou senha inválido(a)');
       console.error(error);
     }
   };
 
   useEffect(() => {
-    setErrorMessage('');
     if (user?.role === 'customer') navigate(`/${ROLE_PATH[user.role]}`);
     if (user?.role === 'seller') navigate(`/${ROLE_PATH[user.role]}`);
   }, [user, navigate]);
@@ -60,14 +69,19 @@ function Login() {
           onChange={ onInputChange }
           value={ state.email }
         />
-        <InputLogin
-          type="text"
-          data-testid="common_login__input-password"
-          name="password"
-          placeholder="Digite sua senha"
-          onChange={ onInputChange }
-          value={ state.password }
-        />
+        <BoxPassword>
+          <InputLogin
+            type={ isShowPassword ? 'text' : 'password' }
+            data-testid="common_login__input-password"
+            name="password"
+            placeholder="Digite sua senha"
+            onChange={ onInputChange }
+            value={ state.password }
+          />
+          { isShowPassword ? (
+            <ClosedEyeIcon onClick={ () => setIsShowPassword(!isShowPassword) } />
+          ) : <OpenEyeIcon onClick={ () => setIsShowPassword(!isShowPassword) } /> }
+        </BoxPassword>
         <ButtonLogin
           type="button"
           className="first"

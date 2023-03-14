@@ -113,6 +113,22 @@ const SpanErrorLogin = styled.span`
   }
 `;
 
+const BoxPassword = styled.label`
+  display: flex;
+  position: relative;
+  width: 95%;
+
+  svg {
+    position: absolute;
+    right: 1.5rem;
+    top: 0.5rem;
+  }
+
+  input {
+    width: 100%;
+  }
+`;
+
 export {
   SpanErrorLogin,
   TitleBoxLogin,
@@ -121,4 +137,5 @@ export {
   InputLogin,
   ButtonLogin,
   BoxImage,
+  BoxPassword,
 };

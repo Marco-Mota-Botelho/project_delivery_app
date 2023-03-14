@@ -26,8 +26,8 @@ const admRegister = async ({ name, email, password, role }) => {
 
 const getAllUsers = async () => {
   const users = await User.findAll(
-    { where: { role: ['customer', 'seller'] } },
-    { attributes: { exclude: ['password'] } },
+    { where: { role: ['customer', 'seller'] },
+      attributes: { exclude: ['password'] } },
     );
   if (!users) return { message: 'User does not exist', status: HttpStatusCode.NOT_FOUND };
   return { result: users, status: HttpStatusCode.OK };
